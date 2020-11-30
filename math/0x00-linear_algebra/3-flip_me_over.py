@@ -3,9 +3,17 @@
 
 
 def matrix_transpose(matrix):
-    """
-    Returns the transpose of a 2D matrix by flipping between columns and rows
-        matrix (list[list]): the given 2D matrix
+    """Returns the transpose of a 2D matrix by flipping between columns
+    and rows.
+
+    Args:
+        matrix (list[list]): the given 2D matrix.
+    Returns:
+        (list[list]): returns a 2D matrix transposed.
+    Example:
+        mat1 = [[1, 2], [3, 4]]
+        matrix_transpose(mat1) -> [[1, 3], [2, 4]]
+
     """
     matrix_t = []
     for i in range(len(matrix[0])):
