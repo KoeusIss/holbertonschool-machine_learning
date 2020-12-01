@@ -4,7 +4,7 @@
 
 def matrix_shape(matrix):
     """Finds the shape of a given matrix by wrapping a recursive function
-    to avoid data persistance in the size list.
+    to avoid data persistence in the size list.
 
     Args:
         matrix (list[list]): the given matrix
@@ -15,15 +15,17 @@ def matrix_shape(matrix):
         matrix_shape(mat1) -> [2, 2]
 
     """
-    def shape(m, size=[]):
-        """Finds the shape of a matrix m recursively by appneding each inner
+    def shape(m, size=None):
+        """Finds the shape of a matrix m recursively by appending each inner
         list length in the size list
 
         Args:
             m (list[list]): the given matrix
-            size (list): the result shape lsit
+            size (list): the result shape list
 
         """
+        if size is None:
+            size = []
         if type(m) is not list:
             return size
         else:
