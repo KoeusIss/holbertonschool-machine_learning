@@ -11,19 +11,23 @@ def get_slice(slice_tpl) -> slice:
         (slice): returns a slice object containing start, stop and step
         of the slicing
     """
-    try:
-        start = slice_tpl[0]
-    except Exception:
+    if slice_tpl and len(slice_tpl) == 1:
         start = None
-    try:
-        stop = slice_tpl[1]
-    except Exception:
-        stop = None
-    try:
-        step = slice_tpl[2]
-    except Exception:
+        stop = slice_tpl[0]
         step = None
-
+    else:
+        try:
+            start = slice_tpl[0]
+        except Exception:
+            start = None
+        try:
+            stop = slice_tpl[1]
+        except Exception:
+            stop = None
+        try:
+            step = slice_tpl[2]
+        except Exception:
+            step = None
     return slice(start, stop, step)
 
 
