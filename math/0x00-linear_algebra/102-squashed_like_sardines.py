@@ -29,4 +29,6 @@ def cat_matrices(mat1, mat2, axis=0):
             second = mat2.copy()
         return first + second
     else:
+        if len(mat1) != len(mat2):
+            return None
         return [cat_matrices(r1, r2, axis - 1) for r1, r2 in zip(mat1, mat2)]
