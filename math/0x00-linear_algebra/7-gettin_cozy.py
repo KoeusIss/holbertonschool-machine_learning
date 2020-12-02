@@ -23,6 +23,8 @@ def cat_matrices2D(mat1, mat2, axis=0):
 
     """
     if axis == 0:
+        if len(mat1[0]) != len(mat2[0]):
+            return None
         first = [[i for i in row1] for row1 in mat1]
         second = [[j for j in row2] for row2 in mat2]
         return first + second
