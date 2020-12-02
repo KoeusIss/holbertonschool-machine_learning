@@ -21,13 +21,12 @@ def cat_matrices(mat1, mat2, axis=0):
     if len(matrix_shape(mat1)) != len(matrix_shape(mat2)):
         return None
     if axis == 0:
-        if isinstance(mat1[0], list) and isinstance(mat2[0], list):
-            if len(mat1[0]) != len(mat2[0]):
-                return None
-        first = mat1.copy()
-        second = mat2.copy()
+        if isinstance(mat1, list) and isinstance(mat1[0], list):
+            first = [[i for i in row1] for row1 in mat1]
+            second = [[j for j in row2] for row2 in mat2]
+        else:
+            first = mat1.copy()
+            second = mat2.copy()
         return first + second
     else:
-        if len(mat1) != len(mat2):
-            return None
         return [cat_matrices(r1, r2, axis - 1) for r1, r2 in zip(mat1, mat2)]
