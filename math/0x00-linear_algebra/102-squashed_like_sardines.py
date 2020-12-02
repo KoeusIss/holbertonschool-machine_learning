@@ -21,6 +21,10 @@ def cat_matrices(mat1, mat2, axis=0):
     if len(matrix_shape(mat1)) != len(matrix_shape(mat2)):
         return None
     if axis == 0:
-        return mat1 + mat2
+        first = mat1.copy()
+        second = mat2.copy()
+        return first + second
     else:
+        if len(mat1) != len(mat2):
+            return None
         return [cat_matrices(r1, r2, axis - 1) for r1, r2 in zip(mat1, mat2)]
