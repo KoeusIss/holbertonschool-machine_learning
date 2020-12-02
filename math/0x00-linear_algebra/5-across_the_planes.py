@@ -2,38 +2,6 @@
 """ Matrices addition """
 
 
-def matrix_shape(matrix):
-    """Finds the shape of a given matrix by wrapping a recursive function
-    to avoid data persistence in the size list.
-
-    Args:
-        matrix (list[list]): the given matrix
-    Returns:
-        (list): a list contain the shape of the given matrix.
-    Example:
-        mat1 = [[1, 2], [3, 4]]
-        matrix_shape(mat1) -> [2, 2]
-
-    """
-    def shape(m, size=None):
-        """Finds the shape of a matrix m recursively by appending each inner
-        list length in the size list
-
-        Args:
-            m (list[list]): the given matrix
-            size (list): the result shape list
-
-        """
-        if size is None:
-            size = []
-        if type(m) is not list:
-            return size
-        else:
-            size.append(len(m))
-            return shape(m[0], size)
-    return shape(matrix)
-
-
 def add_matrices2D(mat1, mat2):
     """Adds two matrices in a new 2D matrix
 
@@ -50,8 +18,13 @@ def add_matrices2D(mat1, mat2):
         add_matrices2D(mat1, mat2) -> [[6, 8], [10, 12]]
 
     """
-    if matrix_shape(mat1) != matrix_shape(mat2):
+    if len(mat1) != len(mat2):
         return None
+    try:
+        if len(mat1[0]) != len(mat2[0]):
+            return None
+    except:
+        None
     result = []
     for i in range(len(mat1)):
         result_row = []
