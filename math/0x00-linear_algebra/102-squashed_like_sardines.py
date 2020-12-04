@@ -18,7 +18,11 @@ def matrix_shape(matrix):
 
 def cat_matrices(mat1, mat2, axis=0):
     """Concatenates matrices"""
-    if len(matrix_shape(mat1)) != len(matrix_shape(mat2)):
+    mat1_shp = matrix_shape(mat1)
+    mat2_shp = matrix_shape(mat2)
+    mat1_shp.pop(axis)
+    mat2_shp.pop(axis)
+    if mat1_shp != mat2_shp or axis >= len(mat1) + 1:
         return None
     if axis == 0:
         if isinstance(mat1, list) and isinstance(mat1[0], list):
