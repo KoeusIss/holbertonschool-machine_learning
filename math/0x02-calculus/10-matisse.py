@@ -13,12 +13,8 @@ def poly_derivative(poly):
         the derivative of the polynomial, if poly is not valid return None.
 
     """
-    if not isinstance(poly, list) or not all(
-            [isinstance(x, int) for x in poly]
-    ) or poly == []:
+    if not isinstance(poly, list) or poly == []:
         return None
-    result = [coef * el for coef, el in enumerate(poly) if coef]
-    if len(poly) == 1 or not any(result):
+    if len(poly) == 1:
         return [0]
-    else:
-        return result
+    return [coef * el for coef, el in enumerate(poly) if coef]
