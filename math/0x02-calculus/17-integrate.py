@@ -13,7 +13,9 @@ def poly_integral(poly, C=0):
         polynomial, if poly or c not valid return None
 
     """
-    if not isinstance(poly, list) or not isinstance(C, int) or poly == []:
+    if not isinstance(poly, list) or poly == []:
+        return None
+    if not isinstance(C, (int, float)):
         return None
     result = [C]
     for degree, coef in enumerate(poly):
@@ -22,7 +24,7 @@ def poly_integral(poly, C=0):
             result.append(int(val))
         else:
             result.append(val)
-    if not any(result):
-        return [0]
-    else:
-        return result
+    for _ in range(len(result)):
+        if result[-1] == 0:
+            result.pop()
+    return result
