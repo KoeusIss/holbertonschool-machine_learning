@@ -17,5 +17,9 @@ def poly_integral(poly, C=0):
         return None
     result = [C]
     for degree, coef in enumerate(poly):
-        result.append(coef * (1 / (degree + 1)))
+        val = coef * (1 / (degree + 1))
+        if val.is_integer():
+            result.append(int(val))
+        else:
+        result.append(val)
     return result
