@@ -15,6 +15,8 @@ def poly_derivative(poly):
     """
     if not isinstance(poly, list):
         return None
-    if len(poly) == 1:
+    result = [coef * el for coef, el in enumerate(poly) if coef]
+    if len(poly) == 1 or not any(result):
         return [0]
-    return [coef * el for coef, el in enumerate(poly) if coef]
+    else:
+        return result
