@@ -22,4 +22,7 @@ def poly_integral(poly, C=0):
             result.append(int(val))
         else:
             result.append(val)
-    return result
+    if not any(result):
+        return [0]
+    else:
+        return result
