@@ -21,5 +21,5 @@ def poly_integral(poly, C=0):
         if val.is_integer():
             result.append(int(val))
         else:
-        result.append(val)
+            result.append(val)
     return result
