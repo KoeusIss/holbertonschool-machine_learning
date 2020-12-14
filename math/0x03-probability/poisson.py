@@ -18,6 +18,8 @@ class Poisson:
         ValueError: If data contains less then two data points
 
     """
+    exp = 2.7182818285
+
     def __init__(self, data=None, lambtha=1.):
         """Initializer"""
         if not data:
@@ -42,14 +44,32 @@ class Poisson:
             float|0: The PMF value for k, 0 if k is out of range
 
         """
-        exp = 2.7182818285
         if not isinstance(k, int):
             k = int(k)
         if k < 0:
             return 0
         else:
-            return (self.lambtha**k * exp**((-1) * self.lambtha))\
+            return (self.lambtha**k * Poisson.exp**((-1) * self.lambtha))\
                 / Poisson.factorial(k)
+
+    def cdf(self, k):
+        """Calculates the value of CDF for a given number of ``successes``
+
+        Args:
+            k (int): Is the given number of successes
+
+        Returns:
+            float|0: The CDF value for k, 0 if k is out of range
+
+        """
+        if not isinstance(k, int):
+            k = int(k)
+        if k < 0:
+            return 0
+        somme = 0
+        for i in range(0, k+1):
+            somme += self.lambtha**i / Poisson.factorial(i)
+        return Poisson.exp**((-1) * self.lambtha) * somme
 
     @staticmethod
     def factorial(k):
