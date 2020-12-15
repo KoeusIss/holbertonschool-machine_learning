@@ -22,6 +22,7 @@ class Poisson:
 
     def __init__(self, data=None, lambtha=1.):
         """Initializer"""
+        self.data = data
         if not data:
             if lambtha < 0:
                 raise ValueError('lambtha must be a positive value')
