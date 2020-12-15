@@ -24,8 +24,8 @@ class Normal:
 
     def __init__(self, data=None, mean=0., stddev=1.):
         """Initializer"""
-        if not data:
-            if stddev < 0:
+        if data is None:
+            if stddev <= 0:
                 raise ValueError('stddev must be a positive value')
             else:
                 self.mean = float(mean)
