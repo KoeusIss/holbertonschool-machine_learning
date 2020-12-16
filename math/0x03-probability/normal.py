@@ -78,3 +78,16 @@ class Normal:
         z = self.z_score(x)
         return (1 / (self.stddev * (2 * Normal.pi)**.5))\
             * Normal.exp**((-1/2) * z**2)
+
+    def cdf(self, x):
+        """Calculates the CDF for a given x-value
+        """
+        z = self.z_score(x)
+        return 1/2 * (1 + Normal.erf(z / 2**.5))
+
+    @staticmethod
+    def erf(z):
+        """Calculates the erf for z
+        """
+        return 2 / Normal.pi**.5\
+            * (z - (z**3 / 3) + (z**5 / 10) - (z**7 / 42) + (z**9 / 216))
