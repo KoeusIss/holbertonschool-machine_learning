@@ -77,8 +77,8 @@ class Neuron:
 
         """
         m = len(Y[0])
-        J = (-1/m) * np.matmul(np.log(A), Y.T)
-        + np.matmul(np.log(1.0000001 - A), (1 - Y).T)
+        J = (-1/m) * (np.matmul(np.log(A), Y.T)
+                      + np.matmul(np.log(1.0000001 - A), (1 - Y).T))
         return np.sum(J)
 
     def evaluate(self, X, Y):
