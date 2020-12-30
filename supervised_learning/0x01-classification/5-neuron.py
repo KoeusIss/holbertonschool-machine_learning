@@ -110,6 +110,6 @@ class Neuron:
 
         """
         m = len(Y[0])
-        grad = np.matmul(X, (A - Y).T)
-        self.__W = self.__W - alpha * grad
-        self.__b = self.__b - alpha * np.average(A - Y)
+        grad = np.matmul(X, (A - Y).T) / m
+        self.__W -= alpha * grad.T
+        self.__b -= alpha * np.average(A - Y)
