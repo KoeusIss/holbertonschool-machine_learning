@@ -137,7 +137,11 @@ class NeuralNetwork:
 
         """
         m = X.shape[0]
-        grad2 = np.matmul(A1, (A2 - Y).T) / m
-        self.__W2 -= alpha * grad.T
-        self.__b2 -= alpha * np.average(A - Y)
-        grad1 = np.matmul(X, ()) * 
+        m = Y.shape[1]
+        d_z2 = A2 - Y
+        self.__W2 -= alpha * np.matmul(d_z2, A1.T) / m
+        self.__b2 -= alpha * np.sum(d_z2, axis=1, keepdims=True) / m
+        d_sig = A1 * (1 - A1)
+        d_z1 = np.matmul(self.W2.T, d_z2) * d_sig
+        self.__W1 -= alpha * np.matmul(d_z1, X.T) / m
+        self.__b1 -= alpha * np.sum(d_z1, axis=1, keepdims=True) / m
