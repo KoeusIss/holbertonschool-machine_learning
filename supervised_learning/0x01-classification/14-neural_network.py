@@ -166,11 +166,11 @@ class NeuralNetwork:
         """
         if not isinstance(iterations, int):
             raise TypeError('iterations must be an integer')
-        if iterations < 0:
+        if iterations < 1:
             raise ValueError('iterations must be a positive integer')
         if not isinstance(alpha, float):
             raise TypeError('alpha must be a float')
-        if alpha < 0:
+        if alpha < 1:
             raise ValueError('alpha must be positive')
         for _ in range(iterations + 1):
             self.forward_prop(X)
