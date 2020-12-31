@@ -163,6 +163,6 @@ class Neuron:
             plt.plot(costs, 'b-')
             plt.xlabel("iteration")
             plt.ylabel("cost")
-            plt.title("Training cost")
+            plt.title("Training Cost")
             plt.show()
         return self.evaluate(X, Y)
