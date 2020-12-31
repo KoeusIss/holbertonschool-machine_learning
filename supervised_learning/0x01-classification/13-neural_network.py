@@ -136,7 +136,6 @@ class NeuralNetwork:
             alpha (float): Is the learning rate
 
         """
-        m = X.shape[0]
         m = Y.shape[1]
         d_z2 = A2 - Y
         self.__W2 -= alpha * np.matmul(d_z2, A1.T) / m
