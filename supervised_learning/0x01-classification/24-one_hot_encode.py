@@ -16,6 +16,8 @@ def one_hot_encode(Y, classes):
         (classes, m), or None in failure.
 
     """
+    if type(Y) != np.ndarray:
+        return None
     try:
         return np.eye(classes)[Y].T
     except Exception:
