@@ -195,7 +195,7 @@ class DeepNeuralNetwork:
             filename (str): Is the file to which the object should be saved
 
         """
-        if len(filename) < 4 or filename[::-4] != '.pkl':
+        if len(filename) < 4 or filename[-4:] != '.pkl':
             filename += '.pkl'
         instance_obj = self
         with open(filename, 'wb') as f:
@@ -216,5 +216,5 @@ class DeepNeuralNetwork:
             with open(filename, 'rb') as f:
                 instance_obj = pickle.load(f)
             return instance_obj
-        except FileNotFoundError:
+        except Exception:
             return None
