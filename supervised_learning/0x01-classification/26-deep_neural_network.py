@@ -2,7 +2,6 @@
 """Deep Neural Network module"""
 import numpy as np
 import matplotlib.pyplot as plt
-from os import path
 import pickle
 
 
@@ -213,8 +212,9 @@ class DeepNeuralNetwork:
             Object|None: The loaded object, or None if filename doesn't exist
 
         """
-        if not path.exists(filename):
+        try:
+            with open(filename, 'rb') as f:
+                instance_obj = pickle.load(f)
+            return instance_obj
+        except Exception:
             return None
-        with open(filename, 'rb') as f:
-            instance_obj = pickle.load(f)
-        return instance_obj
