@@ -10,4 +10,8 @@ def one_hot_decode(one_hot):
         one_hot (numpy.ndarray): Is a one hot encoded
 
     """
+    if type(one_hot) != np.ndarray:
+        return None
+    if len(one_hot) < 1:
+        return None
     return np.argmax(one_hot.T, axis=1)
