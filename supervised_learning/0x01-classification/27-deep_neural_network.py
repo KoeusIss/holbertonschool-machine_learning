@@ -99,7 +99,7 @@ class DeepNeuralNetwork:
 
         """
         m = len(Y[0])
-        L = np.log(A) * Y
+        L = Y * np.log(A)
         return (-1/m) * np.sum(L)
 
     def evaluate(self, X, Y):
