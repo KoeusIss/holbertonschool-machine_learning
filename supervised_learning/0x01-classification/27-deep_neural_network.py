@@ -74,16 +74,15 @@ class DeepNeuralNetwork:
 
         """
         self.__cache["A0"] = X
-        for l in range(1, self.L + 1):
-            z_tmp = np.matmul(self.weights["W" + str(l)],
-                              self.__cache["A" + str(l - 1)]) + self.weights[
-                                  "b" + str(l)]
-            if l == self.L:
+        for layer in range(1, self.L + 1):
+            z_tmp = np.matmul(self.weights["W" + str(layer)], self.__cache[
+                "A" + str(layer - 1)]) + self.weights["b" + str(layer)]
+            if layer == self.L:
                 t_exp = np.exp(z_tmp)
                 A_tmp = t_exp / np.sum(t_exp, axis=0, keepdims=True)
             else:
                 A_tmp = 1 / (1 + np.exp((-1) * z_tmp))
-            self.__cache["A" + str(l)] = A_tmp
+            self.__cache["A" + str(layer)] = A_tmp
         return self.cache["A" + str(self.L)], self.cache
 
     def cost(self, Y, A):
