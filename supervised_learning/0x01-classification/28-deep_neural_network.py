@@ -92,8 +92,7 @@ class DeepNeuralNetwork:
                 if activation == 'sig':
                     A_tmp = 1 / (1 + np.exp((-1) * z_tmp))
                 else:
-                    A_tmp = (np.exp(z_tmp) - np.exp((-1) * z_tmp))\
-                        / (np.exp(z_tmp) + np.exp((-1) * z_tmp))
+                    A_tmp = np.tanh(z_tmp)
             self.__cache["A" + str(layer)] = A_tmp
         return self.cache["A" + str(self.L)], self.cache
 
@@ -151,7 +150,7 @@ class DeepNeuralNetwork:
             if activation == 'sig':
                 d_g = A_prev * (1 - A_prev)
             else:
-                d_g = 1 - np.square(A)
+                d_g = 1 - np.square(A_prev)
             d_z = np.matmul(self.weights["W" + str(layer)].T, d_z) * d_g
             self.__weights["W" + str(layer)] -= alpha * d_W
             self.__weights["b" + str(layer)] -= alpha * d_b
