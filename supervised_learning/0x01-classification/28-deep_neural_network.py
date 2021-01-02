@@ -189,7 +189,7 @@ class DeepNeuralNetwork:
                 raise TypeError('step must be an integer')
             if step not in range(0, iterations + 1):
                 raise ValueError('step must be positive and <= iterations')
-        for iteration in range(iterations):
+        for iteration in range(iterations + 1):
             self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
             if verbose:
