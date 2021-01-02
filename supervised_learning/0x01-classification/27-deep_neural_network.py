@@ -173,12 +173,12 @@ class DeepNeuralNetwork:
         if verbose or graph:
             if not isinstance(step, int):
                 raise TypeError('step must be an integer')
-            if step not in range(0, iterations):
+            if step not in range(0, iterations + 1):
                 raise ValueError('step must be positive and <= iterations')
         for iteration in range(iterations):
             self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
-            if verbose and step in range(0, iterations + 1):
+            if verbose:
                 cost = self.cost(Y, self.cache["A" + str(self.L)])
                 costs = np.append(costs, cost)
                 if iteration % step == 0:
