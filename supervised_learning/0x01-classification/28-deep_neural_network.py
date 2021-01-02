@@ -89,7 +89,7 @@ class DeepNeuralNetwork:
                 t_exp = np.exp(z_tmp)
                 A_tmp = t_exp / np.sum(t_exp, axis=0, keepdims=True)
             else:
-                if activation == 'sig':
+                if self.activation == 'sig':
                     A_tmp = 1 / (1 + np.exp((-1) * z_tmp))
                 else:
                     A_tmp = np.tanh(z_tmp)
@@ -147,7 +147,7 @@ class DeepNeuralNetwork:
             A_prev = self.cache["A" + str(layer - 1)]
             d_W = np.matmul(d_z, A_prev.T) / m
             d_b = np.sum(d_z, axis=1, keepdims=True) / m
-            if activation == 'sig':
+            if self.activation == 'sig':
                 d_g = A_prev * (1 - A_prev)
             else:
                 d_g = 1 - np.square(A_prev)
