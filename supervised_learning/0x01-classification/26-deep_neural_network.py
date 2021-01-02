@@ -179,7 +179,9 @@ class DeepNeuralNetwork:
             if verbose and step in range(0, iterations + 1):
                 cost = self.cost(Y, self.cache["A" + str(self.L)])
                 costs = np.append(costs, cost)
-                print(f"Cost after {iteration} iterations: {cost}")
+                if iteration % step == 0:
+                    print("Cost after {} iterations: {}".format(
+                        iteration, cost))
         if graph:
             plt.plot(costs, 'b-')
             plt.title('Training Cost')
