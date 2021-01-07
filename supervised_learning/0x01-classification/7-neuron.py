@@ -146,19 +146,28 @@ class Neuron:
 
         """
         costs = np.array(())
+        if not isinstance(iterations, int):
+            raise TypeError('iterations must be an integer')
+        if iterations < 0:
+            raise ValueError('iterations must be a positive integer')
+        if not isinstance(alpha, float):
+            raise TypeError('alpha must be a float')
+        if alpha < 0:
+            raise ValueError('alpha must be positive')
         if verbose or graph:
             if not isinstance(step, int):
                 raise TypeError('step must be an integer')
             if step not in range(0, iterations + 1):
                 raise ValueError('step must be positive and <= iterations')
-        for iteration in range(iterations + 1):
-            A = self.forward_prop(X)
-            cost = self.cost(Y, A)
-            if graph:
-                costs = np.append(costs, cost)
-            if verbose and step in range(0, iterations + 1):
-                print("Cost after {} iterations: {}".format(iteration, cost))
+        for iteration in range(iterations):
+            self.forward_prop(X)
             self.gradient_descent(X, Y, A, alpha)
+            if verbose:
+                cost = self.cost(Y, A)
+                costs = np.append(costs, cost)
+                if iteration % step == 0:
+                    print("Cost after {} iterations: {}".format(
+                        iteration, cost))
         if graph:
             plt.plot(costs, 'b-')
             plt.xlabel("iteration")
