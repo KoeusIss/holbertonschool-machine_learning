@@ -37,7 +37,7 @@ def train(
     saver = tf.train.Saver()
     with tf.Session() as session:
         session.run(init)
-        for iteration in range(iterations):
+        for iteration in range(iterations + 1):
             train_cost, train_accuracy = session.run(
                 [loss, accuracy],
                 feed_dict={x: X_train, y: Y_train}
@@ -52,5 +52,6 @@ def train(
                 print("\tTraining Accuracy: {}".format(train_accuracy))
                 print("\tValidation Cost: {}".format(valid_cost))
                 print("\tValidation Accuracy: {}".format(valid_accuracy))
-            session.run(train_op, feed_dict={x: X_train, y: Y_train})
+            if iteration not iterations:
+                session.run(train_op, feed_dict={x: X_train, y: Y_train})
         return saver.save(session, save_path)
