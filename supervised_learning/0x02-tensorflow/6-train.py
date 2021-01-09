@@ -38,14 +38,14 @@ def train(
     with tf.Session() as session:
         session.run(init)
         for iteration in range(iterations):
-            train_cost = session.run(loss,
-                                     feed_dict={x: X_train, y: Y_train})
-            train_accuracy = train_cost = session.run(
-                accuracy, feed_dict={x: X_train, y: Y_train})
-            valid_cost = session.run(loss,
-                                     feed_dict={x: X_valid, y: Y_valid})
-            valid_accuracy = train_cost = session.run(
-                accuracy, feed_dict={x: X_valid, y: Y_valid})
+            train_cost, train_accuracy = session.run(
+                [loss, accuracy],
+                feed_dict={x: X_train, y: Y_train}
+            )
+            valid_cost, valid_accuracy = session.run(
+                [loss, accuracy],
+                feed_dict={x: X_valid, y: Y_valid}
+            )
             if iteration % 100 == 0:
                 print("After {} iterations:".format(iteration))
                 print("\tTraining Cost: {}".format(train_cost))
