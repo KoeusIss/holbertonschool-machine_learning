@@ -52,6 +52,6 @@ def train(
                 print("\tTraining Accuracy: {}".format(train_accuracy))
                 print("\tValidation Cost: {}".format(valid_cost))
                 print("\tValidation Accuracy: {}".format(valid_accuracy))
-            if iteration not iterations:
+            if iteration is not iterations:
                 session.run(train_op, feed_dict={x: X_train, y: Y_train})
         return saver.save(session, save_path)
