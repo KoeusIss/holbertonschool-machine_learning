@@ -10,7 +10,7 @@ def evaluate(X, Y, save_path):
         X (numpy.ndarray): The input data
         Y (numpy.ndarray): Is the one-hot labels for X
         save_path (str): Is the path location of the model.
-        
+
     Return:
         float: prediction, accuracy, loss
 
