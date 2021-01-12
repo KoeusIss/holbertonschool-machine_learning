@@ -68,10 +68,7 @@ def train_mini_batch(
                 X_shuffled, Y_shuffled = shuffle_data(X_train, Y_train)
                 for batch in range(batches):
                     start = batch * batch_size
-                    if start + batch_size < m:
-                        end = start + batch_size
-                    else:
-                        end = m - 1
+                    end = start + batch_size
                     X_batch = X_shuffled[start:end]
                     Y_batch = Y_shuffled[start:end]
                     session.run(
