@@ -81,7 +81,7 @@ def train_mini_batch(
                             y: Y_batch
                         }
                     )
-                    if batch % 100 == 0 or batch == batches:
+                    if batch % 100 == 0 and batch > 0:
                         batch_cost, batch_accuracy = session.run(
                             [loss, accuracy],
                             feed_dict={x: X_batch, y: Y_batch}
