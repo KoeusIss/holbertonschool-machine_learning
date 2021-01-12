@@ -16,8 +16,9 @@ def shuffle_data(X, Y):
         np.ndarray: The shuffled X and Y matrices
 
     """
-    c = np.c_[X, Y]
-    c = np.random.permutation(c)
-    X_shuffled = c[:, :X.shape[1]]
-    Y_shuffled = c[:, Y.shape[1]:]
+    m = X.shape[0]
+    indices = list(np.random.permutation(m))
+    X_shuffled = X[indices, :]
+    Y_shuffled = Y[indices, :]
+
     return X_shuffled, Y_shuffled
