@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Optimization module"""
-import numpy as np
 import tensorflow as tf
 
 shuffle_data = __import__('2-shuffle_data').shuffle_data
@@ -38,7 +37,7 @@ def train_mini_batch(
 
     """
     m = X_train.shape[0]
-    batches = int(np.ceil(m / batch_size))
+    batches = m // batch_size
     with tf.Session() as session:
         saver = tf.train.import_meta_graph("{}.meta".format(load_path))
         saver.restore(session, load_path)
