@@ -19,18 +19,18 @@ def train_mini_batch(
 
     Args:
         X_train (np.ndarray): Is the training data of shape (m, 784), where
-        m is the number of data points and 784 is the number of features.
+            m is the number of data points and 784 is the number of features.
         Y_train (np.ndarray): Is the one-hot training labels with shape (m, 10)
-        where 10 is the number of classes.
+            where 10 is the number of classes.
         X_valid (np.ndarray): Is the validation data of shape (m, 784)
         Y_valid (np.ndarray): Is the one-hot validation labels with shape
-        (m, 10)
+            (m, 10)
         batch_size (int): Is the number of data point in batch.
         epochs (int): Is the number of times the training should pass through
-        the whole dataset.
+            the whole dataset.
         load_path (str): Is the path from which to load the model.
         save_path (str): Is the path where the model should saved after
-        training
+            training
 
     Returns:
         str: The path where the model was saved
@@ -39,7 +39,9 @@ def train_mini_batch(
     m = X_train.shape[0]
     batches = m / batch_size
     if batches % 1 != 0:
-        batches += 1
+        batches = int(batches + 1)
+    else:
+        batches = int(batches)
     with tf.Session() as session:
         saver = tf.train.import_meta_graph("{}.meta".format(load_path))
         saver.restore(session, load_path)
@@ -70,9 +72,8 @@ def train_mini_batch(
                         end = start + batch_size
                     else:
                         end = m - 1
-                    indices = np.arange(start, end)
-                    X_batch = X_shuffled[indices]
-                    Y_batch = Y_shuffled[indices]
+                    X_batch = X_shuffled[start:end]
+                    Y_batch = Y_shuffled[start:end]
                     session.run(
                         train_op,
                         feed_dict={
