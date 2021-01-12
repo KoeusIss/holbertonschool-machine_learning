@@ -13,7 +13,8 @@ def train_mini_batch(
         batch_size=32,
         epochs=5,
         load_path="/tmp/model.ckpt",
-        save_path="/tmp/model.ckpt"):
+        save_path="/tmp/model.ckpt"
+):
     """Trains a loaded neural network model using mini-batch gradient descent
 
     Args:
