@@ -111,6 +111,25 @@ def calculate_loss(y, y_pred):
     return tf.losses.softmax_cross_entropy(y, y_pred)
 
 
+def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
+    """Creates the learning rate decay operation in tensorflow using inverse
+    time decay
+    Args:
+        alpha (float): Is the original learning rate
+        decay_rate (float): Is the weight used to determine the rate at which
+            alpha will decay.
+        global_step (int): Is the number of passes of gradient descent that
+            have elapsed.
+        decay_step (int): Is the number of passes of gradient descent that
+            occur before alpha is decayed further.
+    Returns:
+        tf.operation: The learning rate decay operation
+    """
+    return tf.train.inverse_time_decay(
+        alpha, global_step, decay_step, decay_rate, staircase=True
+    )
+
+
 def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     """Creates the training operation for a neural network in tensorflow
     using Adam algorithm
@@ -184,7 +203,10 @@ def model(
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection("accuracy", accuracy)
 
-    train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon)
+    decay = learning_rate_decay(alpha, decay_rate, tf.Variable(0), 1)
+    tf.add_to_collection("decay", decay)
+
+    train_op = create_Adam_op(loss, decay, beta1, beta2, epsilon)
     tf.add_to_collection("train_op", train_op)
 
     init = tf.global_variables_initializer()
