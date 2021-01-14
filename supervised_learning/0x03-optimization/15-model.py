@@ -64,7 +64,7 @@ def create_batch_norm_layer(prev, n, activation):
         layered, mean, variance, beta, gamma, epsilon
     )
     if activation is None:
-        return layered
+        return normed
     return activation(normed)
 
 
