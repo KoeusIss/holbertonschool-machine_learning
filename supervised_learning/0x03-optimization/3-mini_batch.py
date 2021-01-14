@@ -69,6 +69,8 @@ def train_mini_batch(
                 for batch in range(batches):
                     start = batch * batch_size
                     end = start + batch_size
+                    if end > m:
+                        end = m
                     X_batch = X_shuffled[start:end]
                     Y_batch = Y_shuffled[start:end]
                     session.run(
@@ -78,12 +80,12 @@ def train_mini_batch(
                             y: Y_batch
                         }
                     )
-                    if batch % 100 == 0 and batch > 0:
+                    if (batch + 1) % 100 == 0 and batch > 0:
                         batch_cost, batch_accuracy = session.run(
                             [loss, accuracy],
                             feed_dict={x: X_batch, y: Y_batch}
                         )
-                        print("\tStep {}:".format(batch))
+                        print("\tStep {}:".format(batch + 1))
                         print("\t\tCost: {}".format(batch_cost))
                         print("\t\tAccuracy: {}".format(batch_accuracy))
         return saver.save(session, save_path)
