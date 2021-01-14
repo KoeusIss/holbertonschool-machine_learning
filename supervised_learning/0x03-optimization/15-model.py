@@ -64,7 +64,7 @@ def create_batch_norm_layer(prev, n, activation):
         layered, mean, variance, beta, gamma, epsilon
     )
     if activation is None:
-        return layered
+        return normed
     return activation(normed)
 
 
@@ -181,14 +181,17 @@ def model(
         str: The path where the model was saved
 
     """
-    # Grab data
     x_train, y_train = Data_train
     x_valid, y_valid = Data_valid
-    # Grab data sizes
+
     m, nx = x_train.shape
     classes = y_train.shape[1]
 
-    batches = int(np.ceil(m / batch_size))
+    batches = m / batch_size
+    if batches % 1 != 0:
+        batches = int(batches + 1)
+    else:
+        batches = int(batches)
 
     x, y = create_placeholders(nx, classes)
     tf.add_to_collection("x", x)
@@ -203,9 +206,8 @@ def model(
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection("accuracy", accuracy)
 
-    decay = learning_rate_decay(alpha, decay_rate, tf.Variable(0), 1)
-    tf.add_to_collection("decay", decay)
-
+    global_step = tf.Variable(0)
+    decay = learning_rate_decay(alpha, decay_rate, global_step, 1)
     train_op = create_Adam_op(loss, decay, beta1, beta2, epsilon)
     tf.add_to_collection("train_op", train_op)
 
@@ -250,4 +252,5 @@ def model(
                         print("\tStep {}:".format(batch + 1))
                         print("\t\tCost: {}".format(batch_cost))
                         print("\t\tAccuracy: {}".format(batch_accuracy))
+            session.run(tf.assign(global_step, global_step + 1))
         return saver.save(session, save_path)
