@@ -3,7 +3,7 @@
 import numpy as np
 
 
-def pricision(confusion):
+def precision(confusion):
     """Calculates the precision for each class in a confusion matrix
 
     Args:
