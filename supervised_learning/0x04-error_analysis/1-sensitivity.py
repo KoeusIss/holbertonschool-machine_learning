@@ -4,18 +4,20 @@ import numpy as np
 
 
 def sensitivity(confusion):
-    """Calculates the sensitivity for each class in confusion matrix
+    """Calculates the sensitivity for each class in a confusion matrix
 
     Args:
-        confusion (numpy.ndarray): Is containing a confusion matrix of shape
-            (classes, classes) where row indices represent the correct labels
-            and column indices represent the predicted labels.
+        confusion (numpy.ndarray): Is a confusion matrix of shape
+            (classes, classes) where the row indices is the correct labels
+            and the column indices represent the predicted label
 
     Returns:
-        numpy.ndarray: Is containing the sensitivity of each classes of shape
+        numpy.ndarray: Containing the sensitivity of each class of shape
             (classes,)
 
     """
-    classes = confusion.shape[0]
-    return np.sum(np.eye(classes) * confusion, axis=1)\
-        / np.sum(confusion, axis=1)
+    FP = confusion.sum(axis=0) - np.diag(confusion)
+    FN = confusion.sum(axis=1) - np.diag(confusion)
+    TP = np.diag(confusion)
+    TN = confusion.sum() - (FP + FN + TP)
+    return TP / (TP + FN)
