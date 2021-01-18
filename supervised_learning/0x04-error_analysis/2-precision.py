@@ -3,7 +3,7 @@
 import numpy as np
 
 
-def precision(confusion):
+def pricision(confusion):
     """Calculates the precision for each class in a confusion matrix
 
     Args:
@@ -16,6 +16,8 @@ def precision(confusion):
             (classes,)
 
     """
-    classes = confusion.shape[0]
-    return np.sum(np.eye(classes) * confusion, axis=1)\
-        / np.sum(confusion, axis=0)
+    FP = confusion.sum(axis=0) - np.diag(confusion)
+    FN = confusion.sum(axis=1) - np.diag(confusion)
+    TP = np.diag(confusion)
+    TN = confusion.sum() - (FP + FN + TP)
+    return TP / (TP + FP)
