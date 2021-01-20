@@ -15,5 +15,4 @@ def l2_reg_cost(cost):
         tf.Tensor: The regularized cost
 
     """
-    loss = tf.losses.get_regularization_loss()
-    return cost + loss
+    return cost + tf.losses.get_regularization_losses()
