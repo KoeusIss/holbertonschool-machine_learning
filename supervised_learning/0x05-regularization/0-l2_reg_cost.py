@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Regularization module"""
-import tensorflow as tf
 import numpy as np
 
 
