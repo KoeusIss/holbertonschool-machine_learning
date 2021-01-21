@@ -18,7 +18,8 @@ def l2_reg_cost(cost, lambtha, weights, L, m):
         numpy.ndarray: The cost of network acounting for L2 regularization.
 
     """
-    norm = np.array(())
-    for weight in weights.values():
-        norm = np.append(norm, np.linalg.norm(weight, "fro"))
-    return cost + (lambtha / (2 * m)) * np.sum(norm)
+    norm = 0
+    for el in range(1, L + 1):
+        weight = weights["W" + str(el)]
+        norm += np.linalg.norm(weight, "fro")
+    return cost + lambtha / (2 * m) * norm
