@@ -20,5 +20,5 @@ def l2_reg_cost(cost, lambtha, weights, L, m):
     """
     norm = np.array(())
     for weight in weights.values():
-        norm = np.append(norm, np.linalg.norm(weight))
-    return cost + lambtha / (2 * m) * np.sum(norm)
+        norm = np.append(norm, np.linalg.norm(weight, "fro"))
+    return cost + (lambtha / (2 * m)) * np.sum(norm)
