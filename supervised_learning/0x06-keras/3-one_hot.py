@@ -16,5 +16,5 @@ def one_hot(labels, classes=None):
     """
     m = labels.shape[0]
     if classes is None:
-        classes = labels.shape[0]
+        classes = len(np.unique(labels, axis=0))
     return np.eye(classes)[labels]
