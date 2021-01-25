@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Keras module"""
-import tensorflow as tf
-import tensorflow.keras as keras
+import tensorflow.keras as K
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
@@ -18,16 +17,16 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
         keras.model: Returns the keras model
 
     """
-    inputs = keras.Input(shape=(nx,))
-    regularizer = keras.regularizers.l2(lambtha)
+    inputs = K.Input(shape=(nx,))
+    regularizer = K.regularizers.l2(lambtha)
     outputs = inputs
     for layer, activation in zip(layers, activations):
-        outputs = keras.layers.Dense(
+        outputs = K.layers.Dense(
             layer,
             activation,
             kernel_regularizer=regularizer
         )(outputs)
         if layers.index(layer) < len(layers) - 1:
-            dropout = keras.layers.Dropout((1 - keep_prob))
+            dropout = K.layers.Dropout((1 - keep_prob))
             outputs = dropout(outputs)
-    return keras.Model(inputs=inputs, outputs=outputs)
+    return K.Model(inputs=inputs, outputs=outputs)

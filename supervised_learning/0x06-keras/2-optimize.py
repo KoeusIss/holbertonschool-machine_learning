@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Keras module"""
-import tensorflow as tf
 import tensorflow.keras as K
 
 
