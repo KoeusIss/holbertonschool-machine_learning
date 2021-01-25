@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Keras module"""
 import tensorflow as tf
-import tensorflow.keras as keras
+import tensorflow.keras as K
 
 
 def optimize_model(network, alpha, beta1, beta2):
@@ -18,7 +18,7 @@ def optimize_model(network, alpha, beta1, beta2):
         None
 
     """
-    adam = keras.optimizers.Adam(
+    adam = K.optimizers.Adam(
         lr=alpha,
         beta_1=beta1,
         beta_2=beta2
