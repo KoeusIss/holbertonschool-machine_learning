@@ -45,7 +45,7 @@ def train_model(network, data, labels, batch_size, epochs,
     else:
         early = None
 
-    if validation_data:
+    if learning_rate_decay and validation_data:
         decay = K.callbacks.LearningRateScheduler(scheduler, verbose=1)
     else:
         decay = None
