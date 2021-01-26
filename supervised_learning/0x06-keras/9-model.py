@@ -16,10 +16,10 @@ def save_model(network, filename):
 
 def load_model(filename):
     """Loads an entire model
-    
+
     Args:
         filename (str): Is the path of the file that the model should be loaded
-    
+
     Returns:
         keras.model: the loaded model
     """
