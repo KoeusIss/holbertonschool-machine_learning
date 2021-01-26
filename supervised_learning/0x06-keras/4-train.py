@@ -28,8 +28,8 @@ def train_model(network, data, labels,
     history = network.fit(
         x=data,
         y=labels,
-        epochs=epochs,
         batch_size=batch_size,
+        epochs=epochs,
         verbose=verbose,
         shuffle=shuffle
     )
