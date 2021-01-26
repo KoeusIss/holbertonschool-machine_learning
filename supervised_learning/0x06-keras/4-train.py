@@ -25,7 +25,7 @@ def train_model(network, data, labels,
         Objects: History objects generated after training.
 
     """
-    history =  network.fit(
+    history = network.fit(
         x=data,
         y=labels,
         batch_size=batch_size,
