@@ -36,19 +36,19 @@ def train_model(network, data, labels, batch_size, epochs,
         Objects: History objects generated after training.
 
     """
+    callback = []
+
     def scheduler(step):
         """Schedules an Inverse time decay"""
         return alpha / (1 + decay_rate * step)
 
     if early_stopping:
         early = K.callbacks.EarlyStopping(patience=patience)
-    else:
-        early = None
+        callback.append(early)
 
     if learning_rate_decay and validation_data:
         decay = K.callbacks.LearningRateScheduler(scheduler, verbose=1)
-    else:
-        decay = None
+        callback.append(decay)
 
     history = network.fit(
         x=data,
@@ -58,6 +58,6 @@ def train_model(network, data, labels, batch_size, epochs,
         verbose=verbose,
         validation_data=validation_data,
         shuffle=shuffle,
-        callbacks=[early, decay]
+        callbacks=callback
     )
     return history

@@ -41,6 +41,7 @@ def train_model(network, data, labels, batch_size, epochs,
 
     """
     callback = []
+
     def scheduler(step):
         """Schedules an Inverse time decay"""
         return alpha / (1 + decay_rate * step)
