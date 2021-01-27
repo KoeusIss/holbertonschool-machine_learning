@@ -1,2 +1,4 @@
 .gitingore
+*.h5
+*main*
 mlenv
