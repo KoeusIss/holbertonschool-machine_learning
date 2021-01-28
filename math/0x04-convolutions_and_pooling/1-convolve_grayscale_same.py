@@ -26,10 +26,14 @@ def convolve_grayscale_same(images, kernel):
 
     padding_h = int(np.floor(kw / 2))
     padding_w = int(np.floor(kw / 2))
+    top = int(np.floor(padding_h / 2))
+    bot = padding_h - top
+    lft = int(np.floor(padding_w / 2))
+    rgt = padding_w - lft
 
     padded_images = np.pad(
         array=images,
-        pad_width=((0,), (padding_h,), (padding_w,)),
+        pad_width=((0, 0), (top, bot), (lft, rgt)),
         mode="constant",
         constant_values=0
     )
