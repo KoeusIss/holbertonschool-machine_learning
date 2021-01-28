@@ -44,7 +44,7 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         if input_w % sw == 0:
             padding_w = max(kw - sw, 0)
         else:
-            padding_w = max(kw - (input_w % sw)), 0)
+            padding_w = max(kw - (input_w % sw), 0)
         top = padding_h // 2
         bot = padding_h - top
         lft = padding_w // 2
