@@ -28,13 +28,13 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     sh, sw = stride
 
     if padding == "valid":
-        output_h = int(np.ceil(input_h - kh + 1) / sh)
-        output_w = int(np.ceil(input_w - kw + 1) / sw)
+        output_h = (input_h - kh) // sh + 1
+        output_w = (input_w - kw) // sw + 1
         top, bot, lft, rgt = (0, 0, 0, 0)
 
     elif padding == "same":
-        output_h = int(np.ceil(input_h / sh))
-        output_w = int(np.ceil(input_w / sw))
+        output_h = input_h // sh + 1
+        output_w = input_w // sw + 1
 
         if input_h % sh == 0:
             padding_h = max(kh - sh, 0)
