@@ -28,45 +28,41 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     sh, sw = stride
 
     if padding == "valid":
-        output_h = int(np.floor((input_h - kh + 1) / sh))
-        output_w = int(np.floor((input_w - kw + 1) / sw))
-        _images = images
+        output_h = int(np.ceil(input_h - kh + 1) / sh)
+        output_w = int(np.ceil(input_w - kw + 1) / sw)
+        top, bot, lft, rgt = (0, 0, 0, 0)
 
     elif padding == "same":
         output_h = int(np.ceil(input_h / sh))
         output_w = int(np.ceil(input_w / sw))
-        if input_h % sh == 0:
-            padding_h = np.max(kh - sh, 0)
-        else:
-            padding_h = np.max(kh - (input_h % sh), 0)
-        if input_w % sw == 0:
-            padding_w = np.max(kh - sh, 0)
-        else:
-            padding_w = np.max(kh - (input_h % sh), 0)
 
-        _images = np.pad(
-            array=images,
-            pad_width=((0,), (padding_h,), (padding_w,)),
-            mode="constant",
-            constant_values=0
-        )
+        if input_h % sh == 0:
+            padding_h = max(kh - sh, 0)
+        else:
+            padding_h = max(kh - (input_h % sh), 0)
+
+        if input_w % sw == 0:
+            padding_w = max(kw - sw, 0)
+        else:
+            padding_w = max(kw - (input_w % sw), 0)
+        top = padding_h // 2
+        bot = padding_h - top
+        lft = padding_w // 2
+        rgt = padding_w - lft
 
     else:
         ph, pw = padding
         output_h = int(np.ceil((input_h - kh + 2 * ph + 1) / sh))
         output_w = int(np.ceil((input_w - kw + 2 * pw + 1) / sw))
-        padding_h = np.max((output_h - 1) * sh + kh - input_h, 0)
-        padding_w = np.max((output_w - 1) * sw + kw - input_w, 0)
-        top = padding_h // 2
-        bot = padding_h - top
-        lft = padding_w // 2
-        rgt = padding_w - lft
-        _images = np.pad(
-            array=images,
-            pad_width=((0, 0), (top, bot), (lft, rgt)),
-            mode="constant",
-            constant_values=0
-        )
+        top, bot = (ph, ph)
+        lft, rgt = (pw, pw)
+
+    _images = np.pad(
+        array=images,
+        pad_width=((0, 0), (top, bot), (lft, rgt)),
+        mode="constant",
+        constant_values=0
+    )
 
     output = np.zeros((m, output_h, output_w))
 
