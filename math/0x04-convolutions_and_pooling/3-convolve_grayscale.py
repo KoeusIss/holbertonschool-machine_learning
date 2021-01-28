@@ -28,12 +28,12 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     sh, sw = stride
 
     if padding == "valid":
-        output_h = (input_h - kh) // sh + 2
+        output_h = (input_h - kh) // sh + 1
         output_w = (input_w - kw) // sw + 1
         top, bot, lft, rgt = (0, 0, 0, 0)
 
     elif padding == "same":
-        output_h = input_h // sh + 1
+        output_h = input_h // sh + 2
         output_w = input_w // sw + 1
 
         if kh % sh == 0:
