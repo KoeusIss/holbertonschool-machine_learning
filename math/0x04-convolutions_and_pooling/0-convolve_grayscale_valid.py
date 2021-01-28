@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Convolution and pooling podule"""
 import numpy as np
-from math import ceil, floor
 
 
 def convolve_grayscale_valid(images, kernel):
@@ -22,8 +21,8 @@ def convolve_grayscale_valid(images, kernel):
     m, input_h, input_w = images.shape
     kh, kw = kernel.shape
 
-    output_h = floor(input_h - kh + 1)
-    output_w = floor(input_w - kw + 1)
+    output_h = int(np.floor(input_h - kh + 1))
+    output_w = int(np.floor(input_w - kw + 1))
     output = np.zeros((m, output_h, output_w))
     for w in range(output_w):
         for h in range(output_h):
