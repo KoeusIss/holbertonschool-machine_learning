@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Convolution and pooling podule"""
 import numpy as np
-from math import ceil, floor
 
 
 def convolve_grayscale_same(images, kernel):
