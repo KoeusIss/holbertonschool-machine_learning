@@ -4,15 +4,16 @@ import numpy as np
 
 
 def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
-    """Performs a convolution on grayscale images
+    """Performs a convolution on grayscale images with channels
 
     Args:
         images (numpy.ndarray): Containing multiple gray scale images of shape
-            (m, h, w) where m is the number of images, h is the height in
-            pixels of the images and w is the width in pixels of images.
+            (m, h, w, c) where m is the number of images, h is the height in
+            pixels of the images and w is the width in pixels of images and
+            c is the number of channels.
         kernel (numpy.ndarray): Containing the kernel for the convolution of
-            shape (kh, kw) where kh is the height of the kernel and kw is the
-            widht of the kernel.
+            shape (kh, kw, kc) where kh is the height of the kernel and kw is
+            the widht of the kernel and kc is the number of channel.
         padding (tuple|str): containing (ph, pw) where ph is the padding along
             the height of the image, and the pw is the padding along the width
             or "same" or "valid".
