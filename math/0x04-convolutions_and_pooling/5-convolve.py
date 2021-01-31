@@ -26,7 +26,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
 
     """
     m, input_h, input_w, c = images.shape
-    kh, kw, c, nc = kernels.shape
+    kh, kw, kc, nc = kernels.shape
     sh, sw = stride
 
     if padding == "valid":
