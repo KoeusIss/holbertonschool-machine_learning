@@ -4,13 +4,12 @@ import numpy as np
 
 
 def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
-    """Performs a convolution on grayscale images with channel
+    """Performs a convolution on grayscale images
 
     Args:
         images (numpy.ndarray): Containing multiple gray scale images of shape
-            (m, h, w, c) where m is the number of images, h is the height in
-            pixels of the images and w is the width in pixels of images and
-            c is the number of channel.
+            (m, h, w) where m is the number of images, h is the height in
+            pixels of the images and w is the width in pixels of images.
         kernel (numpy.ndarray): Containing the kernel for the convolution of
             shape (kh, kw) where kh is the height of the kernel and kw is the
             widht of the kernel.
@@ -24,30 +23,26 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
         numpy.ndarray: Containing the convolved image.
 
     """
-    m, input_h, input_w = images.shape
-    kh, kw = kernel.shape
+    m, input_h, input_w, c = images.shape
+    kh, kw, kc = kernel.shape
     sh, sw = stride
 
     if padding == "valid":
         output_h = (input_h - kh) // sh + 1
         output_w = (input_w - kw) // sw + 1
-        top, bot, lft, rgt = (0, 0, 0, 0)
+        top, bot, lft, rgt, fnt, bck = (0, 0, 0, 0, 0, 0)
 
     elif padding == "same":
-        output_h = input_h // sh + 1
-        output_w = input_w // sw + 1
+        output_h = input_h
+        output_w = input_w
 
-        if kh % sh == 0:
-            padding_h = max(kh // sh, 0)
-        else:
-            padding_h = max((kh - 1) // sh, 0)
+        padding_h = int(((input_h - 1) * sh + kh - input_h) / 2) + 1
+        padding_w = int(((input_w - 1) * sw + kw - input_w) / 2) + 1
 
-        if kw % sw == 0:
-            padding_w = max(kw // sw, 0)
-        else:
-            padding_w = max((kw - 1) // sw, 0)
-        top, bot = (padding_h, padding_h)
-        lft, rgt = (padding_w, padding_w)
+        top = padding_h
+        bot = padding_h
+        lft = padding_w
+        rgt = padding_w
 
     else:
         ph, pw = padding
@@ -58,7 +53,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
 
     _images = np.pad(
         array=images,
-        pad_width=((0, 0), (top, bot), (lft, rgt)),
+        pad_width=((0, 0), (top, bot), (lft, rgt), (0, 0)),
         mode="constant",
         constant_values=0
     )
@@ -73,6 +68,6 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
                     i * sh:i * sh + kh,
                     j * sw:j * sw + kw
                 ],
-                axis=(1, 2)
+                axis=(1, 2, 3)
             )
     return output
