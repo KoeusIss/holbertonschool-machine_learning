@@ -35,8 +35,8 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     elif padding == "same":
         output_h = int(np.ceil(input_h / sh))
         output_w = int(np.ceil(input_w / sw))
-        padding_h = ((input_h - 1) * sh + kh - input_h / 2) + 1
-        padding_w = ((input_w - 1) * sw + kw - input_w / 2) + 1
+        padding_h = kh - 1
+        padding_w = kh - 1
 
         top = padding_h
         bot = padding_h
