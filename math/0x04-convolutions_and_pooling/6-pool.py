@@ -26,8 +26,8 @@ def pool(images, kernel_shape, stride, mode='max'):
     kh, kw = kernel_shape
     sh, sw = stride
 
-    output_h = int(np.ceil((input_h - kh) / sh + 1))
-    output_w = int(np.ceil((input_w - kw) / sw + 1))
+    output_h = int((input_h - kh) / sh + 1)
+    output_w = int((input_w - kw) / sw + 1)
 
     output = np.zeros((m, output_h, output_w, c))
 
