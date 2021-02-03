@@ -3,15 +3,50 @@
 import tensorflow.keras as K
 
 
-def lenet5(X):
-    """Builds a modified version of the `LeNet-5` architecture using Keras
-    
-    Args:
-        X (keras.input): Containing the input images for the network with shape
-            (m, 28, 28, 1) where m is the number of images.
-    
-    Returns:
-        keras.model: A keras model compiled to use `Adam` optimization and
-        accuracy mertics.
-    
+def lenet5(x, y):
     """
+    Builds a modified version of the `LeNet-5` architecture using Tensorflow
+    """
+    init = tf.contrib.layers.variance_scaling_initializer()
+    C1 = tf.layers.Conv2D(
+        filters=6,
+        kernel_size=(5, 5),
+        padding='same',
+        kernel_initializer=init,
+        activation=tf.nn.relu
+    )(x)
+    M1 = tf.layers.MaxPooling2D(
+        pool_size=(2, 2),
+        strides=(2, 2)
+    )(C1)
+    C2 = tf.layers.Conv2D(
+        filters=16,
+        kernel_size=(5, 5),
+        padding='valid',
+        kernel_initializer=init,
+        activation=tf.nn.relu
+    )(M1)
+    M2 = tf.layers.MaxPooling2D(
+        pool_size=(2, 2),
+        strides=(2, 2)
+    )(C2)
+    CF = tf.layers.Flatten()(M2)
+    FC1 = tf.layers.Dense(
+        units=120,
+        activation=tf.nn.relu,
+        kernel_initializer=init
+    )(CF)
+    FC2 = tf.layers.Dense(
+        units=84,
+        activation=tf.nn.relu,
+        kernel_initializer=init
+    )(FC1)
+    y_pred = tf.layers.Dense(
+        units=10,
+        activation=tf.nn.softmax,
+        kernel_initializer=init
+    )(FC2)
+    loss = tf.losses.softmax_cross_entropy(y, y_pred)
+    accuracy = tf.metrics.accuracy(y, y_pred)
+    train_op = tf.train.AdamOptimizer().minimize(loss)
+    return y_pred, train_op, loss, accuracy
