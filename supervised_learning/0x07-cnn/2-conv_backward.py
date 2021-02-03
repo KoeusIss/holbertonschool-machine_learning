@@ -38,7 +38,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         padding_h = int(np.ceil((sh * (h_prev - 1) - h_prev + kh) / 2))
         padding_w = int(np.ceil((sw * (w_prev - 1) - w_prev + kw) / 2))
 
-    A_prev_padded = np.pad(
+    _A_prev = np.pad(
         array=A_prev,
         pad_width=((0,), (padding_h,), (padding_w,), (0,)),
         mode="constant",
@@ -55,7 +55,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     dA_prev[
                         n, i * sh:i * sh + kh, j * sw:j * sw + kw, :
                     ] += W[:, :, :, c] * dZ[n, i, j, c]
-                    dW[:, :, :, c] += A_prev[
+                    dW[:, :, :, c] += _A_prev[
                         n, i * sh:i * sh + kh, j * sw:j * sw + kw, :
                     ] * dZ[n, i, j, c]
                     db[:, :, :, c] += dZ[n, i, j, c]
