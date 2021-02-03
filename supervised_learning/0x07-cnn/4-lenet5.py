@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Convolutional Neural Network module"""
-import tensorflow.keras as K
+import tensorflow as tf
 
 
 def lenet5(x, y):
