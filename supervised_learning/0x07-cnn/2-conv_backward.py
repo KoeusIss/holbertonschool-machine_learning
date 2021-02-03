@@ -44,7 +44,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         mode="constant",
         constant_values=0
     )
-    dA_prev = np.zeros_like(A_prev_padded)
+    dA_prev = np.zeros_like(_A_prev)
     dW = np.zeros_like(W)
     db = np.zeros_like(b)
 
