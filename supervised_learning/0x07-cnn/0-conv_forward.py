@@ -48,8 +48,8 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         mode="constant",
         constant_values=0
     )
-    output_h = int((h_prev + 2 * padding_h - kh) / 2)
-    output_w = int((w_prev + 2 * padding_w - kw) / 2)
+    output_h = int((h_prev + 2 * padding_h - kh) / sh + 1)
+    output_w = int((w_prev + 2 * padding_w - kw) / sw + 1)
 
     output = np.zeros((m, output_h, output_w, c_new))
 
