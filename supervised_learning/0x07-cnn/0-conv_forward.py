@@ -61,4 +61,4 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
                     A_padded[:, i * sh:i * sh + kh, j * sw:j * sw + kw],
                     axis=(1, 2, 3)
                 )
-    return output + b
+    return activation(output + b)
