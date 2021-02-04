@@ -40,9 +40,20 @@ def lenet5(X):
         strides=(2, 2)
     )(C2)
     CF = K.layers.Flatten()(C2)
-    F1 = K.layers.Dense(units=84, activation='relu')(CF)
-    F2 = K.layers.Dense(units=120, activation='relu')(F1)
-    F3 = K.layers.Dense(units=10, activation='softmax')(F2)
+    F1 = K.layers.Dense(
+        units=84,
+        kernel_initializer="he_normal",
+        activation='relu'
+    )(CF)
+    F2 = K.layers.Dense(
+        units=120,
+        kernel_initializer="he_normal",
+        activation='relu'
+    )(F1)
+    F3 = K.layers.Dense(
+        units=10,
+        kernel_initializer="he_normal",
+    )(F2)
     model = K.Model(inputs=X, outputs=F3)
     model.compile(
         loss='categorical_crossentropy',
