@@ -41,12 +41,12 @@ def lenet5(X):
     )(C2)
     CF = K.layers.Flatten()(C2)
     F1 = K.layers.Dense(
-        units=84,
+        units=120,
         kernel_initializer="he_normal",
         activation='relu'
     )(CF)
     F2 = K.layers.Dense(
-        units=120,
+        units=84,
         kernel_initializer="he_normal",
         activation='relu'
     )(F1)
