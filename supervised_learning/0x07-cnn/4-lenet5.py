@@ -45,8 +45,10 @@ def lenet5(x, y):
         units=10,
         kernel_initializer=init
     )(FC2)
-    y_pred = nn.tf.softmax(y_pred)
     loss = tf.losses.softmax_cross_entropy(y, y_pred)
-    accuracy = tf.metrics.accuracy(y, y_pred)
+    truth_max = tf.argmax(y, 1)
+    pred_max = tf.argmax(y_pred, 1)
+    difference = tf.equal(truth_max, pred_max)
+    accuracy = tf.reduce_mean(tf.cast(difference, "float"))
     train_op = tf.train.AdamOptimizer().minimize(loss)
     return y_pred, train_op, loss, accuracy
