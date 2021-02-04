@@ -51,4 +51,5 @@ def lenet5(x, y):
     difference = tf.equal(truth_max, pred_max)
     accuracy = tf.reduce_mean(tf.cast(difference, "float"))
     train_op = tf.train.AdamOptimizer().minimize(loss)
+    y_pred = tf.nn.softmax(y_pred)
     return y_pred, train_op, loss, accuracy
