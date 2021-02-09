@@ -46,7 +46,7 @@ def inception_block(A_prev, filters):
     )(A_prev)
     C5X5c = K.layers.Conv2D(
         filters=F5,
-        kernel_size=3,
+        kernel_size=5,
         activation='relu',
         padding='same'
     )(C1X1c)
