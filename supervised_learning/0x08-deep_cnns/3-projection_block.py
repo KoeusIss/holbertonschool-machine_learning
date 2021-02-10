@@ -21,7 +21,8 @@ def projection_block(A_prev, filters, s=2):
         filters=F11,
         kernel_size=1,
         strides=s,
-        kernel_initializer='he_normal'
+        kernel_initializer='he_normal',
+        padding='same'
     )(A_prev)
     C1x1_1a_BN = K.layers.BatchNormalization()(C1x1_1a)
     C1x1_1a_relu = K.layers.Activation('relu')(C1x1_1a_BN)
@@ -30,7 +31,8 @@ def projection_block(A_prev, filters, s=2):
         filters=F12,
         kernel_size=1,
         strides=s,
-        kernel_initializer='he_normal'
+        kernel_initializer='he_normal',
+        padding='same'
     )(A_prev)
     C1x1_1b_BN = K.layers.BatchNormalization()(C1x1_1b)
 
@@ -46,8 +48,10 @@ def projection_block(A_prev, filters, s=2):
     C1x1_2a = K.layers.Conv2D(
         filters=F12,
         kernel_size=1,
-        kernel_initializer='he_normal'
+        kernel_initializer='he_normal',
+        padding='same'
     )(C3x3_relu)
     C1x1_2a_BN = K.layers.BatchNormalization()(C1x1_2a)
-    layer_addition = K.layers.Add()([C1x1_2a_BN, C1x1_1b_BN])
-    return K.layers.Activation('relu')(layer_addition)
+
+    path_addition = K.layers.Add()([C1x1_2a_BN, C1x1_1b_BN])
+    return K.layers.Activation('relu')(path_addition)
