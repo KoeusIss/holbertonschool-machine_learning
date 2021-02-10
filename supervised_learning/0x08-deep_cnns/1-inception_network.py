@@ -99,7 +99,6 @@ def inception_network():
     )(AvgP_17)
     FulC_19 = K.layers.Dense(
         units=1000,
-        activation='softmax'
     )(Drop_18)
 
     return K.models.Model(inputs=X, outputs=FulC_19)
