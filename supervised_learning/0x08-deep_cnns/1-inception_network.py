@@ -21,8 +21,8 @@ def inception_network():
         activation='relu',
     )(X)
     MaxP_2 = K.layers.MaxPooling2D(
-        pool_size=(3, 3),
-        strides=(2, 2),
+        pool_size=3,
+        strides=2,
         padding='same'
     )(C7x7_1)
     C1x1_3 = K.layers.Conv2D(
@@ -39,7 +39,7 @@ def inception_network():
         activation='relu',
     )(C1x1_3)
     MaxP_5 = K.layers.MaxPooling2D(
-        pool_size=(3, 3),
+        pool_size=333,
         strides=2,
         padding='same'
     )(C3x3_4)
@@ -52,7 +52,7 @@ def inception_network():
         (128, 128, 192, 32, 96, 64)
     )
     MaxP_8 = K.layers.MaxPooling2D(
-        pool_size=(3, 3),
+        pool_size=3,
         strides=2,
         padding='same'
     )(In3b_7)
@@ -77,7 +77,7 @@ def inception_network():
         (256, 160, 320, 32, 128, 128)
     )
     MaxP_14 = K.layers.MaxPooling2D(
-        pool_size=(3, 3),
+        pool_size=3,
         strides=2,
         padding='same'
     )(In4e_13)
@@ -90,15 +90,14 @@ def inception_network():
         (384, 192, 384, 48, 128, 128)
     )
     AvgP_17 = K.layers.AveragePooling2D(
-        pool_size=(7, 7),
-        strides=1,
+        pool_size=7,
         padding='same'
     )(In5b_16)
     Drop_18 = K.layers.Dropout(
         rate=0.6,
     )(AvgP_17)
     FulC_19 = K.layers.Dense(
-        units=1000,
+        units=1000
     )(Drop_18)
 
     return K.models.Model(inputs=X, outputs=FulC_19)
