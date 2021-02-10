@@ -27,31 +27,36 @@ def inception_block(A_prev, filters):
         filters=F1,
         kernel_size=1,
         activation='relu',
-        padding='same'
+        padding='same',
+        kernel_initializer='he_normal'
     )(A_prev)
     C1X1b = K.layers.Conv2D(
         filters=F3R,
         kernel_size=1,
         activation='relu',
-        padding='same'
+        padding='same',
+        kernel_initializer='he_normal'
     )(A_prev)
     C3X3b = K.layers.Conv2D(
         filters=F3,
         kernel_size=3,
         activation='relu',
-        padding='same'
+        padding='same',
+        kernel_initializer='he_normal'
     )(C1X1b)
     C1X1c = K.layers.Conv2D(
         filters=F5R,
         kernel_size=1,
         activation='relu',
-        padding='same'
+        padding='same',
+        kernel_initializer='he_normal'
     )(A_prev)
     C5X5c = K.layers.Conv2D(
         filters=F5,
         kernel_size=5,
         activation='relu',
-        padding='same'
+        padding='same',
+        kernel_initializer='he_normal'
     )(C1X1c)
     MPd = K.layers.MaxPooling2D(
         pool_size=(3, 3),
@@ -62,6 +67,7 @@ def inception_block(A_prev, filters):
         filters=FPP,
         kernel_size=1,
         activation='relu',
-        padding='same'
+        padding='same',
+        kernel_initializer='he_normal'
     )(MPd)
     return K.layers.Concatenate()([C1X1a, C3X3b, C5X5c, C1X1d])
