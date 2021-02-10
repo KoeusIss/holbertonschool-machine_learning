@@ -29,19 +29,78 @@ def resnet50():
         strides=2,
         padding='same'
     )(conv1_relu)
-    conv2_1 = identity_block(
+    conv2_1 = projection_block(
         conv2_MP,
-        [64, 64, 256]
+        [64, 64, 256],
+        1
     )
     conv2_2 = identity_block(
         conv2_1,
-        [64, 64, 256]
+        [64, 64, 256],
     )
     conv2_3 = identity_block(
         conv2_2,
-        [64, 64, 256]
+        [64, 64, 256],
     )
-    
-    output = conv2_3
+    conv3_1 = projection_block(
+        conv2_3,
+        [128, 128, 512],
+    )
+    conv3_2 = identity_block(
+        conv3_1,
+        [128, 128, 512],
+    )
+    conv3_3 = identity_block(
+        conv3_2,
+        [128, 128, 512],
+    )
+    conv3_4 = identity_block(
+        conv3_3,
+        [128, 128, 512],
+    )
+    conv4_1 = projection_block(
+        conv3_4,
+        [256, 256, 1024],
+    )
+    conv4_2 = identity_block(
+        conv4_1,
+        [256, 256, 1024],
+    )
+    conv4_3 = identity_block(
+        conv4_2,
+        [256, 256, 1024],
+    )
+    conv4_4 = identity_block(
+        conv4_3,
+        [256, 256, 1024],
+    )
+    conv4_5 = identity_block(
+        conv4_4,
+        [256, 256, 1024],
+    )
+    conv4_6 = identity_block(
+        conv4_5,
+        [256, 256, 1024],
+    )
+    conv5_1 = projection_block(
+        conv4_6,
+        [512, 512, 2048],
+    )
+    conv5_2 = identity_block(
+        conv5_1,
+        [512, 512, 2048],
+    )
+    conv5_3 = identity_block(
+        conv5_2,
+        [512, 512, 2048],
+    )
+    conv_AP = K.layers.AveragePooling2D(
+        pool_size=(7, 7),
+        padding='same'
+    )(conv5_3)
+    fully_connected = K.layers.Dense(
+        units=1000,
+        activation='softmax',
+    )(conv_AP)
 
-    return K.models.Model(inputs=X, outputs=output)
+    return K.models.Model(inputs=X, outputs=fully_connected)
