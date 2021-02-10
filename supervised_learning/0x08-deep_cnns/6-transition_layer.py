@@ -30,5 +30,6 @@ def transition_layer(X, nb_filters, compression):
         pool_size=2,
         strides=2,
     )(conv1)
+    nb_filters = int(nb_filters * compression)
 
-    return conv_AP, nb_filters * compression
+    return conv_AP, nb_filters
