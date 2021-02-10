@@ -21,7 +21,6 @@ def identity_block(A_prev, filters):
         filters=F11,
         kernel_size=1,
         kernel_initializer='he_normal',
-        padding='same'
     )(A_prev)
     C1x1_1_BN = K.layers.BatchNormalization(axis=-1)(C1x1_1)
     C1x1_1_relu = K.layers.Activation('relu')(C1x1_1_BN)
@@ -39,7 +38,6 @@ def identity_block(A_prev, filters):
         filters=F13,
         kernel_size=1,
         kernel_initializer='he_normal',
-        padding='same'
     )(C3x3_relu)
     C1x1_2_BN = K.layers.BatchNormalization(axis=-1)(C1x1_2)
 
