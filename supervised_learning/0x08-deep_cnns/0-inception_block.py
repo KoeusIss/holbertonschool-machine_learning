@@ -26,12 +26,14 @@ def inception_block(A_prev, filters):
     C1X1a = K.layers.Conv2D(
         filters=F1,
         kernel_size=1,
-        activation='relu'
+        activation='relu',
+        padding='same'
     )(A_prev)
     C1X1b = K.layers.Conv2D(
         filters=F3R,
         kernel_size=1,
-        activation='relu'
+        activation='relu',
+        padding='same'
     )(A_prev)
     C3X3b = K.layers.Conv2D(
         filters=F3,
@@ -42,7 +44,8 @@ def inception_block(A_prev, filters):
     C1X1c = K.layers.Conv2D(
         filters=F5R,
         kernel_size=1,
-        activation='relu'
+        activation='relu',
+        padding='same'
     )(A_prev)
     C5X5c = K.layers.Conv2D(
         filters=F5,
@@ -58,6 +61,7 @@ def inception_block(A_prev, filters):
     C1X1d = K.layers.Conv2D(
         filters=FPP,
         kernel_size=1,
-        activation='relu'
+        activation='relu',
+        padding='same'
     )(MPd)
     return K.layers.Concatenate()([C1X1a, C3X3b, C5X5c, C1X1d])
