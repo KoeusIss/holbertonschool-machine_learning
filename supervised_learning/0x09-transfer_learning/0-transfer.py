@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Transfer Learning module"""
+import tensorflow as tf
 import tensorflow.keras as K
 
 
@@ -18,39 +19,56 @@ def preprocess_data(X, Y):
         numpy.ndarray: Y_p is containing the preprocessed Y
 
     """
-    X_p = X / 255
+    X_p = K.applications.vgg16.preprocess_input(X)
     Y_p = K.utils.to_categorical(Y)
     return X_p, Y_p
 
 
 if __name__ == "__main__":
 
-    (X_train, _), (Y_train, _) = K.datasets.cifar10.load_data()
+    (X_train, Y_train), (X_valid, Y_valid) = K.datasets.cifar10.load_data()
 
-    vgg = K.applications.vgg16.VGG16(
+    base_model = K.applications.vgg16.VGG16(
         include_top=False,
         weights='imagenet',
         input_shape=(224, 224, 3)
     )
 
     X, Y = preprocess_data(X_train, Y_train)
+    X_valid, Y_valid = preprocess_data(X_valid, Y_valid)
 
-    vgg.trainable = False
-
-    model = K.Sequential()
-    model.add(K.layers.Lambda(
+    base_model.tainable = False
+    source_model = K.Sequential()
+    source_model.add(K.layers.Lambda(
         lambda x: K.backend.resize_images(x, 7, 7, 'channels_last'),
         input_shape=(32, 32, 3),
         trainable=False
     ))
-    model.add(base_model)
-    model.add(K.layers.Flatten(trainable=False))
+    source_model.add(base_model)
+    source_model.add(K.layers.Flatten(trainable=False))
 
-    X_Features = model.predict(X)
+    X_train_feature = source_model.predict(X)
 
-    model.compile(
+    feature_model = K.Sequential()
+    feature_model.add(K.layers.BatchNormalization())
+    feature_model.add(K.layers.Dense(512, activation='relu'))
+    feature_model.add(K.layers.Dropout(0.3))
+    feature_model.add(K.layers.BatchNormalization())
+    feature_model.add(K.layers.Dense(256, activation='relu'))
+    feature_model.add(K.layers.Dropout(0.3))
+    feature_model.add(K.layers.Dense(10, activation='softmax'))
+
+    feature_model.compile(
         optimizer=K.optimizers.Adam(),
         loss='categorical_crossentropy',
-        metrics=['accuracy']
+        metrics=['accuracy'],
     )
-    model.save('cifar10.h5')
+
+    feature_model.fit(
+        x=X,
+        y=Y,
+        batch_size=64,
+        epochs=30,
+        validation_data=(X_valid, Y_valid)
+    )
+    feature_model.save('cifar10.h5')
