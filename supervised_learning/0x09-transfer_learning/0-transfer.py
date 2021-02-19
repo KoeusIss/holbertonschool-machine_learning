@@ -26,7 +26,7 @@ def preprocess_data(X, Y):
 
 if __name__ == "__main__":
 
-    (X_train, Y_train), (X_valid, Y_valid) = K.datasets.cifar10.load_data()
+    (X_train, Y_train), _ = K.datasets.cifar10.load_data()
 
     base_model = K.applications.vgg16.VGG16(
         include_top=False,
@@ -35,9 +35,9 @@ if __name__ == "__main__":
     )
 
     X, Y = preprocess_data(X_train, Y_train)
-    X_valid, Y_valid = preprocess_data(X_valid, Y_valid)
 
-    base_model.tainable = False
+    base_model.trainable = False
+
     source_model = K.Sequential()
     source_model.add(K.layers.Lambda(
         lambda x: K.backend.resize_images(x, 7, 7, 'channels_last'),
@@ -45,17 +45,16 @@ if __name__ == "__main__":
         trainable=False
     ))
     source_model.add(base_model)
-    source_model.add(K.layers.Flatten(trainable=False))
 
-    X_train_feature = source_model.predict(X)
+    X_feature = source_model.predict(X)
 
     feature_model = K.Sequential()
     feature_model.add(K.layers.BatchNormalization())
     feature_model.add(K.layers.Dense(512, activation='relu'))
-    feature_model.add(K.layers.Dropout(0.3))
+    feature_model.add(K.layers.Dropout(0.2))
     feature_model.add(K.layers.BatchNormalization())
     feature_model.add(K.layers.Dense(256, activation='relu'))
-    feature_model.add(K.layers.Dropout(0.3))
+    feature_model.add(K.layers.Dropout(0.2)
     feature_model.add(K.layers.Dense(10, activation='softmax'))
 
     feature_model.compile(
@@ -65,10 +64,9 @@ if __name__ == "__main__":
     )
 
     feature_model.fit(
-        x=X,
+        x=X_feature,
         y=Y,
-        batch_size=64,
+        batch_size=128,
         epochs=30,
-        validation_data=(X_valid, Y_valid)
     )
     feature_model.save('cifar10.h5')
