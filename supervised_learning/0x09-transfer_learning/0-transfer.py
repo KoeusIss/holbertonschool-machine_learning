@@ -27,6 +27,8 @@ def preprocess_data(X, Y):
 if __name__ == "__main__":
 
     (X_train, Y_train), _ = K.datasets.cifar10.load_data()
+    batch_size=100
+    epochs=20
 
     base_model = K.applications.vgg16.VGG16(
         include_top=False,
@@ -46,6 +48,7 @@ if __name__ == "__main__":
     ))
     source_model.add(base_model)
 
+
     X_feature = source_model.predict(X)
 
     feature_model = K.Sequential()
@@ -54,8 +57,19 @@ if __name__ == "__main__":
     feature_model.add(K.layers.Dropout(0.2))
     feature_model.add(K.layers.BatchNormalization())
     feature_model.add(K.layers.Dense(256, activation='relu'))
-    feature_model.add(K.layers.Dropout(0.2)
+    feature_model.add(K.layers.Dropout(0.2))
     feature_model.add(K.layers.Dense(10, activation='softmax'))
+
+    datagen = K.preprocessing.image.ImageDataGenerator(
+        width_shift_range=0.1,
+        height_shift_range=0.1,
+        horizental_flip=True
+    )
+    generator = datagen.flow(
+        X,
+        Y,
+        batch_size=25
+    )
 
     feature_model.compile(
         optimizer=K.optimizers.Adam(),
@@ -63,10 +77,10 @@ if __name__ == "__main__":
         metrics=['accuracy'],
     )
 
+    steps = X.shape[0] // batch_size
     feature_model.fit(
-        x=X_feature,
-        y=Y,
-        batch_size=128,
-        epochs=30,
+        generator,
+        steps_per_epoch=steps,
+        epochs=epochs,
     )
     feature_model.save('cifar10.h5')
