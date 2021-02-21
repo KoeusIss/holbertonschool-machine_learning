@@ -54,10 +54,17 @@ if __name__ == "__main__":
     feature_model.add(K.layers.Dropout(0.2))
     feature_model.add(K.layers.Dense(10, activation='softmax'))
 
+    feature_model.compile(
+        optimizer=K.optimizers.Adam(),
+        loss='categorical_crossentropy',
+        metrics=['accuracy'],
+        
+    )
+
     feature_model.fit(
         X,
         Y,
-        batch_size=batch_size,
         epochs=epochs,
+        batch_size=batch_size,
     )
     feature_model.save('cifar10.h5')
