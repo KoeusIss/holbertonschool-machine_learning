@@ -27,8 +27,8 @@ def preprocess_data(X, Y):
 if __name__ == "__main__":
 
     (X_train, Y_train), _ = K.datasets.cifar10.load_data()
-    batch_size=100
-    epochs=20
+    batch_size=128
+    epochs=5
 
     base_model = K.applications.vgg16.VGG16(
         include_top=False,
