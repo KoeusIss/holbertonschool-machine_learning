@@ -49,7 +49,6 @@ if __name__ == "__main__":
     source_model.add(base_model)
     source_model.add(K.layers.Flatten())
 
-
     X_feature = source_model.predict(X)
 
     feature_model = K.Sequential()
@@ -59,14 +58,8 @@ if __name__ == "__main__":
     feature_model.add(K.layers.Dropout(0.2))
     feature_model.add(K.layers.Dense(10, activation='softmax'))
 
-    datagen = K.preprocessing.image.ImageDataGenerator(
-        width_shift_range=0.1,
-        height_shift_range=0.1,
-        horizental_flip=True
-    )
-
     feature_model.fit(
-        X,
+        X_feature,
         Y,
         batch_size=batch_size,
         epochs=epochs,
