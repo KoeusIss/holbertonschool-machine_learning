@@ -47,15 +47,14 @@ if __name__ == "__main__":
         trainable=False
     ))
     source_model.add(base_model)
+    source_model.add(K.layers.Flatten())
 
 
     X_feature = source_model.predict(X)
 
     feature_model = K.Sequential()
-    feature_model.add(K.layers.BatchNormalization())
     feature_model.add(K.layers.Dense(512, activation='relu'))
     feature_model.add(K.layers.Dropout(0.2))
-    feature_model.add(K.layers.BatchNormalization())
     feature_model.add(K.layers.Dense(256, activation='relu'))
     feature_model.add(K.layers.Dropout(0.2))
     feature_model.add(K.layers.Dense(10, activation='softmax'))
@@ -65,22 +64,11 @@ if __name__ == "__main__":
         height_shift_range=0.1,
         horizental_flip=True
     )
-    generator = datagen.flow(
+
+    feature_model.fit(
         X,
         Y,
-        batch_size=25
-    )
-
-    feature_model.compile(
-        optimizer=K.optimizers.Adam(),
-        loss='categorical_crossentropy',
-        metrics=['accuracy'],
-    )
-
-    steps = X.shape[0] // batch_size
-    feature_model.fit(
-        generator,
-        steps_per_epoch=steps,
+        batch_size=batch_size,
         epochs=epochs,
     )
     feature_model.save('cifar10.h5')
