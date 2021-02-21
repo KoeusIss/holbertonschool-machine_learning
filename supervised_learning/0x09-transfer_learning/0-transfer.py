@@ -40,18 +40,14 @@ if __name__ == "__main__":
 
     base_model.trainable = False
 
-    source_model = K.Sequential()
-    source_model.add(K.layers.Lambda(
+    feature_model = K.Sequential()
+    feature_model.add(K.layers.Lambda(
         lambda x: K.backend.resize_images(x, 7, 7, 'channels_last'),
         input_shape=(32, 32, 3),
         trainable=False
     ))
-    source_model.add(base_model)
-    source_model.add(K.layers.Flatten())
-
-    X_feature = source_model.predict(X)
-
-    feature_model = K.Sequential()
+    feature_model.add(base_model)
+    feature_model.add(K.layers.Flatten())
     feature_model.add(K.layers.Dense(512, activation='relu'))
     feature_model.add(K.layers.Dropout(0.2))
     feature_model.add(K.layers.Dense(256, activation='relu'))
@@ -59,7 +55,7 @@ if __name__ == "__main__":
     feature_model.add(K.layers.Dense(10, activation='softmax'))
 
     feature_model.fit(
-        X_feature,
+        X,
         Y,
         batch_size=batch_size,
         epochs=epochs,
