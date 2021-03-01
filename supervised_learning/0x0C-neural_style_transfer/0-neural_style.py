@@ -31,14 +31,14 @@ class NST:
     def __init__(self, style_image, content_image,  alpha=1e4, beta=1):
         """Initaializer"""
         if not isinstance(style_image, np.ndarray)\
-                and len(style_image.shape) != 3\
-                and style_image.shape[2] != 3:
+                or len(style_image.shape) != 3\
+                or style_image.shape[2] != 3:
             raise TypeError(
                 'style_image must be a numpy.ndarray with shape (h, w, 3)'
             )
         if not isinstance(content_image, np.ndarray)\
-                and len(content_image.shape) != 3\
-                and content_image.shape[2] != 3:
+                or len(content_image.shape) != 3\
+                or content_image.shape[2] != 3:
             raise TypeError(
                 'content_image must be a numpy.ndarray with shape (h, w, 3)'
             )
@@ -68,8 +68,8 @@ class NST:
 
         """
         if not isinstance(image, np.ndarray)\
-                and len(image.shape) != 3\
-                and image.shape[2] != 3:
+                or len(image.shape) != 3\
+                or image.shape[2] != 3:
             raise TypeError(
                 'image must be a numpy.ndarray with shape (h, w, 3)'
             )
