@@ -76,10 +76,10 @@ class NST:
         h, w, _ = image.shape
         if h > w:
             h_new = 512
-            w_new = int(w * (h_new / h))
+            w_new = int(w * h_new / h)
         else:
             w_new = 512
-            h_new = int(h * (w_new / w))
+            h_new = int(h * w_new / w)
 
         image = image[tf.newaxis, ...]
         image = tf.image.resize_images(
