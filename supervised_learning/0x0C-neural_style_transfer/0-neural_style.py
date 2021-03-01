@@ -87,10 +87,6 @@ class NST:
             [h_new, w_new],
             method=tf.image.ResizeMethod.BICUBIC
         )
-        minimum = np.min(image, axis=(0, 1))
-        maximum = np.max(image, axis=(0, 1))
-        image = tf.divide(
-            tf.subtract(image, minimum),
-            tf.subtract(maximum, minimum)
-        )
+        image = image / 255
+        image = tf.clip_by_value(image, 0, 1)
         return image
