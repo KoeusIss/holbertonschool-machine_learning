@@ -99,10 +99,11 @@ class NST:
         vgg = tf.keras.applications.vgg19.VGG19(
             include_top=False, weights='imagenet'
         )
-        vgg.trainable = False
         style_outputs = [
-            vgg.get_layer(name).output for name in NST.style_layers
+            vgg.get_layer(name).output for name in self.style_layers
         ]
-        content_output = vgg.get_layer(NST.content_layer).output
+        content_output = vgg.get_layer(self.content_layer).output
         outputs = style_outputs + [content_output]
-        return tf.keras.models.Model(inputs=vgg.input, outputs=outputs)
+        model = tf.keras.models.Model(inputs=vgg.input, outputs=outputs)
+        model.trainable = False
+        return model
