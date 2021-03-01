@@ -83,10 +83,9 @@ class NST:
             h_new = int(h * w_new / w)
 
         image = image[tf.newaxis, ...]
-        image = tf.image.resize_images(
+        image = tf.image.resize_bicubic(
             image,
-            [h_new, w_new],
-            method=tf.image.ResizeMethod.BICUBIC
+            [h_new, w_new]
         )
         image = image / 255
         image = tf.clip_by_value(image, 0, 1)
