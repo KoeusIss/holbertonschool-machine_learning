@@ -146,15 +146,20 @@ class NST:
         """
         nb_layers = len(self.style_layers)
 
-        style_outputs = self.model(self.style_image)
-        content_outputs = self.model(self.content_image)
+        style_img = tf.keras.applications.vgg19.preprocess_input(
+            self.style_image * 255
+        )
+        content_img = tf.keras.applications.vgg19.preprocess_input(
+            self.content_image * 255
+        )
+
+        style_outputs = self.model(style_img)
+        content_outputs = self.model(content_img)
 
         style_features = [
-           layer for layer in style_outputs[:nb_layers]
+            layer for layer in style_outputs[:nb_layers]
         ]
-        self.content_features = [
-           layer for layer in content_outputs[:nb_layers]
-        ]
+        self.content_feature = content_outputs[nb_layers:][0]
 
         self.gram_style_features = [
             NST.gram_matrix(layer) for layer in style_features
