@@ -96,13 +96,23 @@ class NST:
 
         """
         vgg = tf.keras.applications.vgg19.VGG19(
-            include_top=False, weights='imagenet'
+            include_top=False,
+            weights='imagenet'
         )
-        vgg.trainable = False
-        for layer in vgg.layers:
+        custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
+        vgg.save('source_model')
+        custom_model = tf.keras.models.load_model(
+            'source_model',
+            custom_objects=custom_objects
+        )
+
+        custom_model.trainable = False
+        for layer in custom_model.layers:
             layer.trainable = False
 
-        s_outputs = [vgg.get_layer(name).output for name in self.style_layers]
-        c_output = vgg.get_layer(self.content_layer).output
+        s_outputs = [
+            custom_model.get_layer(name).output for name in self.style_layers
+        ]
+        c_output = custom_model.get_layer(self.content_layer).output
         outputs = s_outputs + [c_output]
-        return tf.keras.models.Model(inputs=vgg.input, outputs=outputs)
+        return tf.keras.models.Model(custom_model.input, outputs)
