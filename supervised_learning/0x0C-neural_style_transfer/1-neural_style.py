@@ -52,7 +52,7 @@ class NST:
         self.content_image = NST.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
-        self.model = self.load_model()
+        self.load_model()
 
     @staticmethod
     def scale_image(image):
@@ -115,4 +115,4 @@ class NST:
         ]
         c_output = custom_model.get_layer(self.content_layer).output
         outputs = s_outputs + [c_output]
-        return tf.keras.models.Model(custom_model.input, outputs)
+        self.model = tf.keras.models.Model(custom_model.input, outputs)
