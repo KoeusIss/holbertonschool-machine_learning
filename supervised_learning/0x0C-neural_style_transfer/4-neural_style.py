@@ -183,6 +183,7 @@ class NST:
 
         _, h, w, c = tf.shape(style_output).numpy()
         if not isinstance(gram_target, (tf.Tensor, tf.Variable))\
+                or len(tf.shape(style_output).numpy() != 3)\
                 or any(tf.shape(style_output).numpy() != (1, c, c)):
             raise TypeError(
                 'gram_target must be a tensor of shape [1, {}, {}]'
