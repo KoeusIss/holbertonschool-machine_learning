@@ -224,7 +224,7 @@ class NST:
             The content cost
 
         """
-        c_feature = self.content_feature[0]
+        c_feature = self.content_feature
         if not isinstance(content_output, (tf.Tensor, tf.Variable))\
                 or content_output.shape != c_feature.shape:
             raise TypeError('content_output must be a tensor of shape {}'.
