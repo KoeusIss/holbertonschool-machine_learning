@@ -256,3 +256,18 @@ class NST:
         J_content = self.content_cost(content_output)
         J = self.alpha * J_content + self.beta * J_style
         return J, J_content, J_style
+
+    def compute_grads(self, generated_image):
+        """Calculates the gradients for the generated image
+
+        Args:
+            generated_image (tf.Tensor): Containing the generated image
+
+        Returns:
+            gradients, J_total, J_content, J_style
+
+        """
+        with tf.GradientTape() as tape:
+            J_total, J_content, J_style = self.total_cost(generated_image)
+        gradient = tape.gradient(J_total, generated_image)
+        return gradient, J_total, J_content, J_style
