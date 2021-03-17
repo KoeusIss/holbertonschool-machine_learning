@@ -3,19 +3,10 @@
 
 
 def _det(matrix, total=0):
-    """Calculates the determininant recursivly
-
-    Args:
-        matrix (list[list]): contain the matrix
-        total (int): is the cumulated determinant
-
-    Returns:
-        int: The determinant
-
+    """
+    Calculates the determininant recursivly
     """
     if len(matrix) == 1:
-        if not matrix[0]:
-            return 1
         return matrix[0][0]
 
     if len(matrix) == 2:
@@ -53,13 +44,16 @@ def determinant(matrix):
         float: The determinant of the matrix
 
     """
-    try:
-        if not isinstance(matrix, list) or not isinstance(matrix[0], list):
-            raise TypeError('matrix must be a list of lists')
-    except Exception:
+    if not isinstance(matrix, list) or matrix == []:
         raise TypeError('matrix must be a list of lists')
 
-    if matrix[0] and len(matrix) != len(matrix[0]):
+    if any(not isinstance(row, list) for row in matrix):
+        raise TypeError('matrix must be a list of lists')
+
+    if matrix == [[]]:
+        return 1
+
+    if any(len(row) != len(matrix) for row in matrix):
         raise ValueError('matrix must be a square matrix')
 
     return _det(matrix)
