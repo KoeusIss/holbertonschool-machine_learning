@@ -16,7 +16,7 @@ def definiteness(matrix):
     if len(matrix.shape) < 2:
         return None
 
-    eivals = np.lialg.eig(matrix)[0]
+    eivals = np.linalg.eig(matrix)[0]
     if all(eivals >= 0):
         if any(eivals == 0):
             return 'Positive semi-definite'
