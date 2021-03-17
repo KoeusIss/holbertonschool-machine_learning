@@ -69,4 +69,4 @@ def inverse(matrix):
     det = _det(matrix)
     if det == 0:
         return None
-    return [[col * (1 / det) for col in row] for row in adj]
+    return [[col / det for col in row] for row in adj]
