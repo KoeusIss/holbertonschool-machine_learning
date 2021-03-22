@@ -19,7 +19,7 @@ def mean_cov(X):
         np.ndarray: of shape (d, d) represent the covariance matrix
 
     """
-    if not isinstance(X, np.ndarray) and len(shape(X)) != 2:
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         raise TypeError('X must be a 2D numpy.ndarray')
 
     n, d = X.shape
