@@ -68,8 +68,7 @@ class MultiNormal:
 
         d, _ = self.cov.shape
         if len(x.shape) != 2 or x.shape != (d, 1):
-            raise ValueError('x must have the shape ({}, 1)'.
-                             format(x.shape[0]))
+            raise ValueError('x must have the shape ({}, 1)'.format(d))
 
         cst = 1 / (np.sqrt((2 * np.pi)**d * np.linalg.det(self.cov)))
         result = cst * np.exp(
