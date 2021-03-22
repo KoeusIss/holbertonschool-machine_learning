@@ -44,5 +44,5 @@ class MultiNormal:
         """
         d, n = X.shape
         mean = np.expand_dims(np.mean(X, axis=1), axis=1)
-        cov = np.cov(X)
+        cov = np.matmul((X - mean), (X - mean).T) / (n - 1)
         return mean, cov
