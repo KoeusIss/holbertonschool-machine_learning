@@ -31,7 +31,8 @@ class MultiNormal:
 
     @staticmethod
     def mean_cov(X):
-        """Calculates the mean and covariance of data set
+        """
+        Calculates the mean and covariance of data set
 
         Args:
             X (np.ndarray): of shape (n, d) containing the data set where n is
@@ -46,3 +47,34 @@ class MultiNormal:
         mean = np.expand_dims(np.mean(X, axis=1), axis=1)
         cov = np.matmul((X - mean), (X - mean).T) / (n - 1)
         return mean, cov
+
+    def pdf(self, x):
+        """
+        Calculates the PDF at a data point:
+
+        Args:
+            x (numpy.ndarray): of shape (d, 1) containing the data point.
+
+        Raises:
+            TypeError: If x is not a numpy.ndarray
+            ValyeError: If x is not of shape (d, 1)
+
+        Returns:
+            float: The PDF value
+
+        """
+        if not isinstance(x, np.ndarray):
+            raise TypeError('x must be a numpy.ndarray')
+        if len(x.shape) != 2 or x.shape[1] != 1:
+            raise ValueError('x must have the shape ({}, 1)'.
+                             format(x.shape[0]))
+
+        d, _ = self.cov.shape
+        cst = 1 / (np.sqrt((2 * np.pi)**d * np.linalg.det(self.cov)))
+        result = cst * np.exp(
+            (-1/2) * np.matmul(
+                np.matmul((x - self.mean).T, np.linalg.inv(self.cov)),
+                (x - self.mean)
+            )
+        )
+        return result[0][0]
