@@ -3,3 +3,4 @@
 *main*
 mlenv
 *.jpg
+__pycache__
