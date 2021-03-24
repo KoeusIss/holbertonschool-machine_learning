@@ -4,3 +4,4 @@
 mlenv
 *.jpg
 __pycache__
+*.txt
