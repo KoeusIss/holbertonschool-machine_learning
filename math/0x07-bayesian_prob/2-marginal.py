@@ -31,9 +31,8 @@ def combination(n, k):
     return factorial(n) / (factorial(k) * factorial(n - k))
 
 
-def intersection(x, n, P, Pr):
-    """Calculates the intersection of obtaining data given various hypothetical
-    probabilities of developing severe side effects
+def marginal(x, n, P, Pr):
+    """Calculates the marginal probability of obtaining the data
 
     Arguments:
         x {int} -- Is the number of patients that develop severe side effects
@@ -52,7 +51,7 @@ def intersection(x, n, P, Pr):
         ValueError: If the sum of Pr items different than 1
 
     Returns:
-        numpy.ndarray: Containing the intersection of obtaining x and n.
+        float: marginal probability of obtaining x and n.
 
     """
     if not isinstance(n, int) or n < 1:
@@ -76,4 +75,5 @@ def intersection(x, n, P, Pr):
 
     cmb = combination(n, x)
     L = cmb * np.power(P, x) * np.power(1 - P, n - x)
-    return L * Pr
+    intersection = L * Pr
+    return np.sum(intersection)
