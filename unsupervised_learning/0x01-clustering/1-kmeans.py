@@ -14,11 +14,6 @@ def initialize(X, k):
         numpy.ndarray|None -- Containing the initialized centroids for each
             dimension, Otherwise return None
     """
-    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
-    if not isinstance(k, int) or k < 1:
-        return None
-
     n, d = X.shape
     X_min = np.min(X, axis=0)
     X_max = np.max(X, axis=0)
@@ -57,16 +52,21 @@ def kmeans(X, k, iterations=1000):
         np.ndarray, np.ndarray -- The newly moved centroids, and the newly
         assigned classes
     """
+
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
+    if not isinstance(k, int) or k < 1:
+        return None
     centroids = initialize(X, k)
 
     for i in range(iterations):
         old_centroids = np.copy(centroids)
         closest = get_closest(X, centroids)
+        if len(np.unique(closest)) < 5:
+            centroids = initialize(X, k)
+            closest = get_closest(X, centroids)
         for j in range(k):
-            if len(np.unique(closest)) < 5:
-                centroids = initialize(X, k)
-                closest = get_closest(X, centroids)
-            centroids[j, :] = np.mean(X[closest == j, :], axis=0)
+            centroids[j] = np.mean(X[closest == j], axis=0)
         if np.all(old_centroids == centroids):
             break
     return centroids, closest
