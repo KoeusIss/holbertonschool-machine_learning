@@ -14,6 +14,8 @@ def initialize(X, k):
         numpy.ndarray|None -- Containing the initialized centroids for each
             dimension, Otherwise return None
     """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
     if not isinstance(k, int) or k < 1:
         return None
 
