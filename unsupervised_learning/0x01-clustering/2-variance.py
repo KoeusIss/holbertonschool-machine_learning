@@ -15,7 +15,7 @@ def variance(X, C):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
-    if not isinstance(C, np.ndarray) or len(C.shape) != 2:
+    if not isinstance(C, np.ndarray):
         return None
 
     distances = np.sqrt(np.sum((X - C[:, np.newaxis])**2, axis=2))
