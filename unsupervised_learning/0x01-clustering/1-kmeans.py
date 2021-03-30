@@ -59,4 +59,5 @@ def kmeans(X, k, iterations=1000):
                 centroids[j] = np.mean(X[closest == j], axis=0)
         if np.all(old_centroids == centroids):
             break
-    return centroids, closest
+
+    return centroids, get_closest(X, centroids)
