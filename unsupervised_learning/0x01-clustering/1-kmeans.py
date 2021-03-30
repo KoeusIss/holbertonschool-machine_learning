@@ -32,9 +32,11 @@ def kmeans(X, k, iterations=1000):
         assigned classes
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
+        return None, None
     if not isinstance(k, int) or k < 1:
-        return None
+        return None, None
+    if not isinstance(iterations, int) or iterations < 1:
+        return None, None
 
     n, d = X.shape
     centroids = np.random.uniform(
