@@ -57,13 +57,14 @@ def kmeans(X, k, iterations=1000):
         return None
     if not isinstance(k, int) or k < 1:
         return None
+    if not isinstance(iterations, int) or iterations < 1:
+        return None
 
     centroids = initialize(X, k)
 
     for i in range(iterations):
         old_centroids = np.copy(centroids)
         closest = get_closest(X, centroids)
-        
         for j in range(k):
             if (X[closest == j].size == 0):
                 centroids[j] = initialize(X, 1)
