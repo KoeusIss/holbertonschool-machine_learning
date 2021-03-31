@@ -4,6 +4,16 @@ import numpy as np
 
 
 def maximization(X, g):
+    """Calculates the maximization step in the EM algorithm for a GMM
+
+    Arguments:
+        X {np.ndarray} -- Containing the data points
+        g {np.ndarray} -- Containing the posterior probabilities
+
+    Returns:
+        tuple(np.ndarray) -- Contating the prior, the mean and the covariance
+        matrix respectively
+    """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None
     if not isinstance(g, np.ndarray) or len(g.shape) != 2:
