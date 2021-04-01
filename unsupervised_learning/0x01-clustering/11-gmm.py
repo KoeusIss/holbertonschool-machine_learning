@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Clustering module"""
 import sklearn.mixture
 
 
