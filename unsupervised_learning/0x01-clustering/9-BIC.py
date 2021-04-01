@@ -29,6 +29,12 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
         return None, None, None, None
     if kmax - kmin < 1:
         return None, None, None, None
+    if not isinstance(iterations, int) or iterations < 1:
+        return None, None, None, None, None
+    if not isinstance(tol, float) or tol < 0:
+        return None, None, None, None, None
+    if not isinstance(verbose, bool):
+        return None, None, None, None, None
 
     n, d = X.shape
     b_lst = []
@@ -38,8 +44,6 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     for k in range(kmin, kmax + 1):
         ks.append(k)
         em = expectation_maximization(X, k, iterations, tol, verbose)
-        if em is (None, None, None, None, None):
-            return None, None, None, None
         pi, m, S, g, L = em
         results.append((pi, m, S))
         p = k * d + (k - 1) + k * d * (d + 1) / 2
