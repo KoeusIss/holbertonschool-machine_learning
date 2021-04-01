@@ -7,21 +7,7 @@ maximization = __import__('7-maximization').maximization
 
 
 def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
-    """Perform the Expectation maximization for the GMM
-
-    Arguments:
-        X {np.ndarray} -- Containing the data points
-        k {int} -- Containing the number of class
-
-    Keyword Arguments:
-        iterations {int} -- Is the number of iterations (default: {1000})
-        tol {float} -- Is the tolearance over liklihood (default: {1e-5})
-        verbose {bool} -- Indicates if we could print status (default: {False})
-
-    Returns:
-        tuple(np.ndarray, float) -- the prior, the mean, the covaraince matrix
-        the posterior and the Liklihood
-    """
+    """Performs the EM"""
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None, None
     if not isinstance(k, int) or k < 1:
