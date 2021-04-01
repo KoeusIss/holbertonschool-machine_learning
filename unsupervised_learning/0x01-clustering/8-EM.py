@@ -24,7 +24,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None, None
-    if not isinstance(k, int) or k < 1:
+    if not isinstance(k, int) or k < 1 or > X.shape[0]:
         return None, None, None, None, None
     if not isinstance(iterations, int) or iterations < 1:
         return None, None, None, None, None
