@@ -16,10 +16,14 @@ def maximization(X, g):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None
-    n, d = X.shape
-    if not isinstance(g, np.ndarray) or len(g.shape) != 2 or g.shape[1] != n:
+    if not isinstance(g, np.ndarray) or len(g.shape) != 2:
+        return None, None, None
+    if g.shape[1] != X.shape[0]:
+        return None, None, None
+    if np.any(np.sum(g, axis=0) != np.ones((g.shape[1]))):
         return None, None, None
 
+    n, d = X.shape
     k, _ = g.shape
 
     pi = np.zeros((k,))
