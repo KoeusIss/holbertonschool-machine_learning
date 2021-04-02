@@ -16,12 +16,12 @@ def pdf(X, m, S):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
-    if not isinstance(m, np.ndarray) or len(m.shape) != 1:
+    n, d = X.shape
+    if not isinstance(m, np.ndarray) or m.shape != (d,):
         return None
-    if not isinstance(S, np.ndarray) or len(S.shape) != 2:
+    if not isinstance(S, np.ndarray) or S.shape != (d, d):
         return None
 
-    n, d = X.shape
     S_det = np.linalg.det(S)
     S_inv = np.linalg.inv(S)
     cst = 1 / (np.sqrt((2 * np.pi)**d * S_det))
