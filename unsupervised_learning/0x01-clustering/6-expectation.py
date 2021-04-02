@@ -19,15 +19,20 @@ def expectation(X, pi, m, S):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
-    if not isinstance(pi, np.ndarray) or len(pi.shape) != 1:
-        return None, None
-    if not isinstance(m, np.ndarray) or len(m.shape) != 2:
-        return None, None
-    if not isinstance(S, np.ndarray) or len(S.shape) != 3:
-        return None, None
 
     n, d = X.shape
+    if not isinstance(pi, np.ndarray) or len(pi.shape) != 1:
+        return None, None
+
     k = pi.shape[0]
+    if k >= n:
+        return None, None
+
+    if not isinstance(m, np.ndarray) or m.shape != (k, d):
+        return None, None
+
+    if not isinstance(S, np.ndarray) or S.shape != (k, d, d):
+        return None, None
 
     nominator = np.zeros((k, n))
     for i in range(k):
