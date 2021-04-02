@@ -20,8 +20,6 @@ def maximization(X, g):
         return None, None, None
     if g.shape[1] != X.shape[0]:
         return None, None, None
-    if np.any(np.sum(g, axis=0) != np.ones((g.shape[1]))):
-        return None, None, None
 
     n, d = X.shape
     k, _ = g.shape
