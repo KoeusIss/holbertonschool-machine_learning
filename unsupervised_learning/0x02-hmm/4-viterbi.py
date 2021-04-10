@@ -4,6 +4,23 @@ import numpy as np
 
 
 def viterbi(Observation, Emission, Transition, Initial):
+    """Performs The Viterbi Algorithm
+
+    Arguments:
+        Observation {np.ndarray} -- Contains the index of observation of shape
+        (T,) where T is the number of observations
+        Emission {np.ndarray} -- Contains the emission probability of
+        a specefic observation given a hidden state, with shape (N, M) where
+        N is the number of hidden states and M is all the possible observation.
+        Transition {np.ndarray} -- Contains the transition probabilites with
+        shape (N, N) where N is the number of states
+        Initial {np.ndarra} -- Contains the starting probability in particular
+        state
+
+    Returns:
+        tuple(list, float) -- The most likely sequence of hidden states,
+        The probability of obtaining the path sequence
+    """
     if not isinstance(Observation, np.ndarray) or len(Observation.shape) != 1:
         return None, None
     if not isinstance(Emission, np.ndarray) or len(Emission.shape) != 2:
