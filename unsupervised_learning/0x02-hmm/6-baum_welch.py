@@ -184,7 +184,5 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
             backward(Observations, Emission, Transition, Initial)
         )
         Transition, Emission = maximization(Observations, gamma, xi, (N, M))
-        if np.all(np.isclose(Emission, Emission_original))\
-                or np.all(np.isclose(Transition, Transition_original)):
-            break
+
     return Transition, Emission
