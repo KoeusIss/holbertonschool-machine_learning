@@ -57,7 +57,7 @@ class GaussianProcess:
         K_ss = self.kernel(X_s, X_s)
         K_inv = np.linalg.inv(self.K)
 
-        mu = np.einsum('...j, ...k, km->jm', K_s, K_inv, self.Y).sum(1)
+        mu = np.einsum('...j, ...k, km->jm', K_s, K_inv, self.Y).reshape(s,)
         sigma = (K_ss - np.einsum('...j, ...k, km->jm', K_s, K_inv, K_s))
 
         return mu, np.diag(sigma)
