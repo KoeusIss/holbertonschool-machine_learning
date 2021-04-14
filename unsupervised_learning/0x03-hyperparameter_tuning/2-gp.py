@@ -57,10 +57,10 @@ class GaussianProcess:
         K_ss = self.kernel(X_s, X_s)
         K_inv = np.linalg.inv(self.K)
 
-        mu = np.einsum('...j, ...k, km->jm', K_s, K_inv, self.Y).reshape(s,)
-        sigma = (K_ss - np.einsum('...j, ...k, km->jm', K_s, K_inv, K_s))
+        mu = K_s.T.dot(K_inv).dot(self.Y).reshape(s,)
+        sigma = np.diag(K_ss - K_s.T.dot(K_inv).dot(K_s))
 
-        return mu, np.diag(sigma)
+        return mu, sigma
 
     def update(self, X_new, Y_new):
         """Updates the Gaussian processs
