@@ -160,3 +160,6 @@ Thumbs.db #thumbnail cache on Windows
 # IDE
 .vscode
 .idea
+# Personal
+datasets
+.ipynb
