@@ -31,7 +31,7 @@ class BidirectionalCell:
             np.ndarray -- Softmaxed numpy arrat
         """
         ex = np.exp(z)
-        return ex / np.sum(ex, 1, keepdims=True)
+        return ex / np.sum(ex, -1, keepdims=True)
 
     def forward(self, h_prev, x_t):
         """Performs forward propagation for one time step
