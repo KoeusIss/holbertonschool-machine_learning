@@ -4,7 +4,6 @@
 # Dependencies
 # -----------------------------------------------------------------------------
 import numpy as np
-import pandas as pd
 import matplotlib as mpl
 import tensorflow as tf
 import tensorflow.keras as K

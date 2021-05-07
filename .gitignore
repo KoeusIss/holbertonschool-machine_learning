@@ -163,3 +163,4 @@ Thumbs.db #thumbnail cache on Windows
 # Personal
 datasets
 .ipynb
+supervised_learning/0x0E-time_series/bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv
