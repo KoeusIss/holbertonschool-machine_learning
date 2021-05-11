@@ -16,7 +16,7 @@ def bag_of_words(sentences, vocab=None):
         tuple(np.ndarray, list) -- Containing the embeddings matrix, list of
         features
     """
-    cont_vector = CountVectorizer()
-    embeddings = cont_vector.fit_transform(sentences, vocab)
+    cont_vector = CountVectorizer(vocabulary=vocab)
+    embeddings = cont_vector.fit_transform(sentences)
     features = cont_vector.get_feature_names()
     return embeddings.toarray(), features
