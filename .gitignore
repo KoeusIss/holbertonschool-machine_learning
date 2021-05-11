@@ -163,3 +163,11 @@ Thumbs.db #thumbnail cache on Windows
 # Personal
 datasets
 supervised_learning/0x0E-time_series/bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv
+
+supervised_learning/0x0E-time_series/forecast_btc.py
+supervised_learning/0x0E-time_series/preprocess_data.py
+supervised_learning/0x09-transfer_learning/Untitled1.ipynb
+supervised_learning/0x09-transfer_learning/Untitled.ipynb
+supervised_learning/0x09-transfer_learning/second.ipynb
+supervised_learning/0x07-cnn/0x06-paper_review.ipynb
+supervised_learning/0x0E-time_series/forecast_btc.py
