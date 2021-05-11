@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Word Embeddings module"""
-import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
 
 
 def bag_of_words(sentences, vocab=None):
@@ -16,17 +16,7 @@ def bag_of_words(sentences, vocab=None):
         tuple(np.ndarray, list) -- Containing the embeddings matrix, list of
         features
     """
-    PONCTUATION = ".,;!?"
-    if vocab is None:
-        words = [word for sentence in sentences for word in sentence.split()]
-        vocab = sorted(set(word.lower().strip(PONCTUATION) for word in words))
-
-    feats = vocab
-    s = len(sentences)
-    f = len(feats)
-    embds = np.zeros((s, f), dtype='int')
-    for i, sentence in enumerate(sentences):
-        for j, word in enumerate(feats):
-            if word in sentence.lower():
-                embds[i, j] = 1
-    return embds, feats
+    cont_vector = CountVectorizer()
+    embeddings = cont_vector.fit_transform(sentences, vocab)
+    features = cont_vector.get_feature_names()
+    return embeddings.toarray(), features
