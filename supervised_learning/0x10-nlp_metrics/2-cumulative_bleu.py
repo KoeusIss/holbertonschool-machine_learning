@@ -40,6 +40,7 @@ def ngram_bleu(references, sentence, n):
 
     sentence = n_gram(sentence, n)
     references = list(map(lambda ref: n_gram(ref, n), references))
+
     flatten_ref = set([gram for ref in references for gram in ref])
 
     numerator = 0
@@ -58,11 +59,31 @@ def ngram_bleu(references, sentence, n):
             best_match = ref
             r_idx = i
 
-    r = rs[r_idx]
+    return precision, rs[r_idx]
+
+
+def cumulative_bleu(references, sentence, n):
+    """Calculates the cumulative bleu score
+
+    Arguments:
+        references {list} -- Containg a list of string sentence reference
+        sentence {list} -- Contain the model candidate
+        n {int} -- The largest number of prefered grams
+
+    Returns:
+        float -- the cumulative BLEU score
+    """
+    c = len(sentence)
+    precision = np.zeros(n)
+
+    for i in range(n):
+        precision[i], r = ngram_bleu(references, sentence, i + 1)
+
     if c > r:
         brevity_penality = 1
     else:
         brevity_penality = np.exp(1 - r / c)
 
-    bleu_score = brevity_penality * precision
+    weights = np.ones(n) * 1 / n
+    bleu_score = brevity_penality * np.exp(np.sum(np.log(precision) * weights))
     return bleu_score

@@ -34,5 +34,5 @@ def uni_bleu(references, sentence):
     else:
         brevity_penality = np.exp(1 - len(best_match) / len(sentence))
 
-    bleu_score = brevity_penality * np.exp(np.log(precision))
+    bleu_score = brevity_penality * precision
     return bleu_score
