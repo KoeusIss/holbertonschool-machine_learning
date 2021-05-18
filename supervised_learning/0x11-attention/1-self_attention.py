@@ -18,7 +18,7 @@ class SelfAttention(tf.keras.layers.Layer):
         self.units = units
         self.W = tf.keras.layers.Dense(units)
         self.U = tf.keras.layers.Dense(units)
-        self.V = tf.keras.layers.Dense(1, activation='tanh')
+        self.V = tf.keras.layers.Dense(1)
 
     def call(self, s_prev, hidden_states):
         """Instance Call
