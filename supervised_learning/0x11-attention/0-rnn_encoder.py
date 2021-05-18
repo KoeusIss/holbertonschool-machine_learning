@@ -4,6 +4,8 @@ import tensorflow as tf
 
 
 class RNNEncoder(tf.keras.layers.Layer):
+    """RNNEncoder class -- Encode for machine translation
+    """
     def __init__(self, vocab, embedding, units, batch) -> None:
         """Initializer
 
