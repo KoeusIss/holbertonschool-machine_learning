@@ -1,6 +1,5 @@
 #!/usr/bin/env pyhton3
 """Attention module"""
-import tensorflow as tf
 import numpy as np
 
 
