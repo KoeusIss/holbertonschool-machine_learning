@@ -6,8 +6,49 @@ EncoderBlock = __import__('7-transformer_encoder_block').EncoderBlock
 
 
 class Encoder(tf.keras.layers.Layer):
-    def __init__(self, N, dm, h, hidden, input_vocab, max_seq_len, drop_rate=0.1) -> None:
+    def __init__(
+        self, N, dm, h, hidden, input_vocab, max_seq_len, drop_rate=0.1
+    ) -> None:
+        """Initializer
+
+        Arguments:
+            N {int} -- The number of blocks
+            dm {int} -- Model dimensionality
+            h {int} -- The number of heads
+            hidden {int} -- The number of hidden units
+            input_vocab {int} -- The vocabulary length
+            max_seq_len {int} -- Maximum sequence length
+
+        Keyword Arguments:
+            drop_rate {float} -- Drop rate (default: {0.1})
+        """
         super(Encoder, self).__init__()
         self.N = N
         self.dm = dm
-        self.embedding =
+        self.embedding = tf.keras.layers.Embedding(input_vocab, dm)
+        self.positional_encoding = positional_encoding(max_seq_len, dm)
+        encoder_block = EncoderBlock(dm, h, hidden, drop_rate)
+        self.blocks = [encoder_block] * self.N
+        self.dropout = tf.keras.layers.Dropout(drop_rate)
+
+    def call(self, x, training, mask):
+        """Instance call
+
+        Arguments:
+            x {tf.Tensor} -- Input tensor
+            training {Boolean} -- Indicates training
+            mask {[type]} -- The mask
+
+        Returns:
+            tf.Tensor -- The output of encoder layer
+        """
+        input_seq_len = x.shape[1]
+        embedded = self.embedding(x)
+        scaled = embedded * tf.math.sqrt(tf.cast(self.dm, tf.float32))
+        PE = tf.expand_dims(self.positional_encoding, 0)
+        inputs = scaled + tf.cast(PE[:, :input_seq_len, :], tf.float32)
+
+        for block in self.blocks:
+            output = block(inputs, training, mask)
+            inputs = output
+        return output
