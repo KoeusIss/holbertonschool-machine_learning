@@ -13,10 +13,12 @@ def positional_encoding(max_seq_len, dm):
     Returns:
         np.ndarray -- Containing the positional encoding matrix
     """
+    def get_angles(pos, i):
+        angle_rates = 1 / np.power(10000, (2 * (i//2)) / np.float32(dm))
+        return pos * angle_rates
+
     position = np.arange(max_seq_len)
-    min_freq = 1e-4
-    frequences = np.power(min_freq, 2 * (np.arange(dm) // 2) / dm)
-    PE = position.reshape(-1, 1) * frequences.reshape(1, -1)
-    PE[:, ::2] = np.cos(PE[:, ::2])
-    PE[:, 1::2] = np.sin(PE[:, 1::2])
+    PE = get_angles(position[:, np.newaxis], np.arange(dm)[np.newaxis, :])
+    PE[:, 0::2] = np.sin(PE[:, 0::2])
+    PE[:, 1::2] = np.cos(PE[:, 1::2])
     return PE
