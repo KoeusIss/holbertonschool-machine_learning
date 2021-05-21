@@ -46,8 +46,8 @@ class Encoder(tf.keras.layers.Layer):
         input_seq_len = x.shape[1]
         embedded = self.embedding(x)
         scaled = embedded * tf.math.sqrt(tf.cast(self.dm, tf.float32))
-        PE = tf.expand_dims(self.positional_encoding, 0)
-        x = scaled + tf.cast(PE[:, :input_seq_len, :], tf.float32)
+        positioned = scaled + self.positional_encoding[:input_seq_len, :]
+        x = self.dropout(positioned, training=training)
 
         for block in self.blocks:
             x = block(x, training, mask)
