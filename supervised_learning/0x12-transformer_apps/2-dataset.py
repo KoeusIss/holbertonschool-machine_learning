@@ -10,14 +10,16 @@ class Dataset:
     def __init__(self) -> None:
         """Initializer
         """
-        self.data_train, self.data_valid = tfds.load(
+        data_train, data_valid = tfds.load(
             "ted_hrlr_translate/pt_to_en",
             split=['train', 'validation'],
             as_supervised=True
         )
         self.tokenizer_pt, self.tokenizer_en = self.tokenize_dataset(
-            self.data_train
+            data_train
         )
+        self.data_train = data_train.map(self.tf_encode)
+        self.data_valid = data_valid.map(self.tf_encode)
 
     def tokenize_dataset(self, data):
         """Creates subwords tokenizers for out dataset
@@ -58,3 +60,23 @@ class Dataset:
             self.tokenizer_en.encode(en.numpy()) + [pt_vsize + 1]
 
         return pt_tokens, en_tokens
+
+    def tf_encode(self, pt, en):
+        """Wraps the encoder into tensorflow operation
+
+        Arguments:
+            pt {tf.Tensor} -- Contains the Portoguese sentence
+            en {tf.Tensor} -- Contains the English sentence
+
+        Returns:
+            tuple -- Contains the tensors of encoded Portoguese and English
+            sentences
+        """
+        pt_lang, en_lang = tf.py_function(
+            func=self.encode,
+            inp=[pt, en],
+            Tout=[tf.int64, tf.int64]
+        )
+        pt_lang.set_shape([None])
+        en_lang.set_shape([None])
+        return pt_lang, en_lang
