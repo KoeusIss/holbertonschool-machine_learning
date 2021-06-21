@@ -1,7 +1,7 @@
 # Specefic
 *.h5
 *main*
-mlenv
+envml
 *.jpg
 *.txt
 
