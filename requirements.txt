@@ -1,6 +1,7 @@
 absl-py==0.8.1
 argon2-cffi==20.1.0
 astor==0.8.1
+atari-py==0.2.9
 attrs==20.3.0
 backcall==0.2.0
 bleach==3.2.1
@@ -9,6 +10,7 @@ cffi==1.14.4
 chardet==4.0.0
 cloudpickle==1.6.0
 cycler==0.10.0
+Cython==0.29.23
 decorator==4.4.2
 defusedxml==0.6.0
 dill==0.3.3
@@ -16,6 +18,7 @@ entrypoints==0.3
 future==0.18.2
 gast==0.2.2
 gensim==3.8.0
+glfw==2.1.0
 google-pasta==0.2.0
 googleapis-common-protos==1.52.0
 GPy==1.9.9
@@ -41,10 +44,12 @@ jupyter-console==6.1.0
 jupyter-core==4.6.3
 jupyterlab==2.2.9
 jupyterlab-server==1.2.0
-Keras==2.2.5
+Keras==2.2.4
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.2
+keras-rl==0.4.2
 kiwisolver==1.1.0
+lockfile==0.12.2
 Markdown==3.2.2
 MarkupSafe==1.1.1
 matplotlib==3.0.0
@@ -78,6 +83,7 @@ Pygments==2.7.3
 pyparsing==2.4.7
 pyrsistent==0.17.3
 python-dateutil==2.8.1
+python-utils==2.5.6
 pytz==2021.1
 PyYAML==5.3.1
 pyzmq==20.0.0
