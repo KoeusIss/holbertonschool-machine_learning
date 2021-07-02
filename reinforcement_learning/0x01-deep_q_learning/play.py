@@ -15,7 +15,7 @@ def play(mode="play"):
     Keyword Arguments:
         mode {str} -- Either play or train (default: {"play"})
     """
-    weights_filename = 'policy.h5f'
+    weights_filename = 'policy.h5'
     model = T.model
     dqn = T.build_agent(model, T.nb_actions)
     if mode == "train":
