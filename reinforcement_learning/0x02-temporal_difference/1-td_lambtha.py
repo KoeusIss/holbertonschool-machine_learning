@@ -20,11 +20,10 @@ def play_episode(env, policy, max_steps):
 
     for _ in range(max_steps):
         state, reward, done, _ = env.step(action)
+        action = policy(state)
+        state_action_reward.append((state, action, reward))
         if done:
-            state_action_reward.append((state, None, reward))
             break
-        else:
-            state_action_reward.append((state, action, reward))
 
     return state_action_reward
 
