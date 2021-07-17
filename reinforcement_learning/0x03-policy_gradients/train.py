@@ -5,7 +5,7 @@ from policy_gradient import policy
 from policy_gradient import policy_gradient
 
 
-def play_episode(env, weight):
+def play_episode(env, weight, episode, show_result):
     """Plays a single episode
 
     Arguments:
@@ -20,6 +20,8 @@ def play_episode(env, weight):
     state_action_reward_grad = []
 
     while True:
+        if show_result and (episode % 1000 == 0):
+            env.render()
         action, grad = policy_gradient(state, weight)
         state, reward, done, _ = env.step(action)
         state = state[None, :]
@@ -29,7 +31,7 @@ def play_episode(env, weight):
     return state_action_reward_grad
 
 
-def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
+def train(env, nb_episodes, alpha=0.000045, gamma=0.98, show_result=False):
     """Trains a Policy Gradient REINFORCE model
 
     Arguments:
@@ -47,7 +49,7 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
     episodes = []
 
     for episode in range(nb_episodes):
-        sarg = play_episode(env, weight)
+        sarg = play_episode(env, weight, episode, show_result)
         T = len(sarg) - 1
 
         score = 0
