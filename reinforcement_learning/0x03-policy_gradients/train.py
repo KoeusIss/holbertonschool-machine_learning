@@ -44,21 +44,21 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
         list -- The scores list during episodes
     """
     weight = np.random.rand(4, 2)
-    rewards = []
+    episodes = []
 
     for episode in range(nb_episodes):
-        state_action_reward_grad = play_episode(env, weight)
-        T = len(state_action_reward_grad) - 1
+        sarg = play_episode(env, weight)
+        T = len(sarg) - 1
 
         score = 0
         for t in range(0, T):
-            _, _, reward, grad = state_action_reward_grad[t]
+            _, _, reward, grad = sarg[t]
             score += reward
 
             G = np.sum([
-                gamma**(k - t - 1) * state_action_reward_grad[k][2] for k in
-                range(t + 1, T + 1)])
-            weight += alpha * G * gamma**t * grad
-        rewards.append(score)
+                gamma**sarg[k][2] *
+                sarg[k][2] for k in range(t + 1, T + 1)])
+            weight += alpha * G * grad
+        episodes.append(score)
         print("{}: {}".format(episode, score), end="\r", flush=False)
-    return rewards
+    return episodes
