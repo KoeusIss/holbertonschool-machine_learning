@@ -28,6 +28,7 @@ def play_episode(env, weight, episode, show_result):
         state_action_reward_grad.append((state, action, reward, grad))
         if done:
             break
+    env.close()
     return state_action_reward_grad
 
 
