@@ -2,9 +2,8 @@
 *.h5
 *main*
 envml
-*.jpg
 *.txt
-
+supervised_learning/0x07-cnn/robot.jpg
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
