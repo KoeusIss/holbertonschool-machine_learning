@@ -173,3 +173,4 @@ supervised_learning/0x0E-time_series/forecast_btc.py
 reinforcement_learning/0x00-q_learning/q_learning.ipynb
 mlenv
 pipeline/0x00-pandas/coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv
+pipeline/0x00-pandas/bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv
