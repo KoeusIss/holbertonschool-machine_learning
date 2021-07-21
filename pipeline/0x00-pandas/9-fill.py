@@ -8,7 +8,10 @@ df = from_file('coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv', ',')
 
 df.pop("Weighted_Price")
 df.fillna({"Volume_(BTC)": 0, "Volume_(Currency)": 0}, inplace=True)
-df[['Open', 'High', 'Low', 'Close']] = df[['Open', 'High', 'Low', 'Close']].ffill()
+df[['Close']] = df[['Close']].ffill()
+df['High'] = df['High'].fillna(df['Close'])
+df['Open'] = df['Open'].fillna(df['Close'])
+df['Low'] = df['Low'].fillna(df['Close'])
 
 print(df.head())
 print(df.tail())
