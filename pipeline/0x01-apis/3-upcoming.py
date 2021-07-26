@@ -25,7 +25,7 @@ if __name__ == '__main__':
             )
 
     launch_name = upcoming_launch[1]
-    launch_date = datetime.fromtimestamp(upcoming_launch[0])
+    launch_date = datetime.fromtimestamp(upcoming_launch[0]).isoformat()
 
     response = requests.get(base_url + "/rockets/" + upcoming_launch[2])
     rocket_name = response.json()['name']
