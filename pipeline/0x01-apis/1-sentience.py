@@ -13,21 +13,16 @@ def sentientPlanets():
     response = requests.get(entry_point)
     content = response.json()
 
-    planets = set()
+    planets = list()
     while content['next']:
-        page_result = content['results']
+        results = content['results']
 
-        for sentinent in page_result:
+        for sentinent in results:
             planet_url = sentinent['homeworld']
             if planet_url:
                 name = requests.get(planet_url).json()['name']
-                planets.add(name)
+                planets.append(name)
 
         response = requests.get(content['next'])
         content = response.json()
     return planets
-
-
-planets = sentientPlanets()
-for planet in planets:
-    print(planet)
