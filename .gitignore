@@ -13,6 +13,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 setup.sql
+metal_bands.sql
 # C extensions
 *.so
 
