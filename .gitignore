@@ -12,7 +12,7 @@ supervised_learning/0x07-cnn/robot.jpg
 __pycache__/
 *.py[cod]
 *$py.class
-
+setup.sql
 # C extensions
 *.so
 
