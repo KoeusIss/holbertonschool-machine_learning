@@ -178,3 +178,4 @@ pipeline/0x00-pandas/bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv
 pipeline/0x02-databases/17-init.sql
 pipeline/0x02-databases/18-init.sql
 pipeline/0x02-databases/19-init.sql
+pipeline/0x02-databases/20-init.sql
