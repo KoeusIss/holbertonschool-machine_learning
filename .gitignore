@@ -180,3 +180,5 @@ pipeline/0x02-databases/18-init.sql
 pipeline/0x02-databases/19-init.sql
 pipeline/0x02-databases/20-init.sql
 pipeline/0x02-databases/21-init.sql
+pipeline/0x04-data_augmentation/best.jpg
+.gitignore
